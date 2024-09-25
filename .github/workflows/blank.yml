@@ -20,6 +20,8 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: |
+        run:
           mvn package
+      - name: Run .jar file
+        run:
           java -jar target/zoo-1.0-SNAPSHOT-shaded.jar

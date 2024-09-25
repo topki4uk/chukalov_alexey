@@ -1,9 +1,10 @@
 package animals;
 
-import interfaces.IMeat;
+import Food.FoodException;
 import interfaces.IAquatic;
-import Food.Fish;
+import interfaces.IMeat;
 import interfaces.IPredator;
+import Food.Fish;
 
 public class Dolphin implements IAquatic, IPredator {
 
@@ -15,7 +16,9 @@ public class Dolphin implements IAquatic, IPredator {
   @Override
   public void eat(IMeat fish) {
     if (fish instanceof Fish) {
-      System.out.format("Dolphin eat %s\n", (Fish) fish);
+      System.out.format("Dolphin eat %s\n", fish);
+    } else {
+      throw new FoodException("Dolphins couldn't eat this!");
     }
   }
 }

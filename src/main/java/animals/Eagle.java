@@ -1,7 +1,7 @@
 package animals;
 
-import interfaces.IMeat;
 import interfaces.IFlying;
+import interfaces.IMeat;
 import interfaces.IPredator;
 
 public class Eagle implements IFlying, IPredator {

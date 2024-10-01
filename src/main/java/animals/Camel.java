@@ -1,17 +1,18 @@
 package animals;
 
-import interfaces.IHerbivorous;
+import abc.Herbivorous;
 import interfaces.ILand;
 import Food.Grass;
 
-public class Camel implements IHerbivorous, ILand {
-  @Override
+public class Camel extends Herbivorous implements ILand {
+  private final String type = "Camel";
+
   public void eat(Grass grass) {
-    System.out.format("Camel eat %s\n", grass);
+    super.eat(type, grass);
   }
 
   @Override
   public void walk() {
-    System.out.println("Camel walk");
+    System.out.printf("%s walk\n", type);
   }
 }

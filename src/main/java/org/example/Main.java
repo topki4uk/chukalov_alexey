@@ -3,14 +3,14 @@ package org.example;
 import Food.Beef;
 import Food.Fish;
 import Food.Grass;
-import interfaces.IMeat;
+import abc.Meet;
 import animals.*;
 
 public class Main {
   public static void main(String[] args) {
     Grass grass = new Grass();
-    IMeat beef = new Beef();
-    IMeat fish = new Fish();
+    Meet beef = new Beef();
+    Meet fish = new Fish();
 
     Horse horse = new Horse();
     Camel camel = new Camel();

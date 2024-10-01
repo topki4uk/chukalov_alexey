@@ -1,17 +1,18 @@
 package animals;
 
+import abc.Meet;
+import abc.Predator;
 import interfaces.IFlying;
-import interfaces.IMeat;
-import interfaces.IPredator;
 
-public class Eagle implements IFlying, IPredator {
+public class Eagle extends Predator implements IFlying {
+  protected final String type = "Eagle";
+
   @Override
   public void fly() {
-    System.out.println("Eagle fly");
+    System.out.printf("%s walk\n", type);
   }
 
-  @Override
-  public void eat(IMeat meat) {
-    System.out.format("Eagle eat %s\n", meat);
+  public void eat(Meet meat) {
+    super.eat(type, meat);
   }
 }

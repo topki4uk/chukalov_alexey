@@ -2,22 +2,23 @@ package animals;
 
 import Food.Beef;
 import Food.FoodException;
+import abc.Meet;
+import abc.Predator;
 import interfaces.ILand;
-import interfaces.IMeat;
-import interfaces.IPredator;
 
-public class Tiger implements ILand, IPredator {
+public class Tiger extends Predator implements ILand {
+  private final String type = "Tiger";
+
   @Override
   public void walk() {
-    System.out.println("Tiger walk");
+    System.out.printf("%s walk\n", type);
   }
 
-  @Override
-  public void eat(IMeat beef) {
-    if (beef instanceof Beef) {
-      System.out.format("Tiger eat %s\n", beef);
-    } else {
-      throw new FoodException("Tigers couldn't eat this!");
+  public void eat(Meet beef) {
+    if (!(beef instanceof Beef)) {
+      throw new FoodException("Couldn't eat this!");
     }
+
+    super.eat(type, beef);
   }
 }

@@ -1,10 +1,10 @@
 package Food;
 
-import interfaces.IMeat;
+import abc.Meet;
 
-public class Beef implements IMeat {
+public class Beef extends Meet {
   @Override
   public String toString() {
-    return "beef";
+    return Food.BEEF.getTitle();
   }
 }

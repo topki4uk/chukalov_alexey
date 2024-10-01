@@ -1,14 +1,15 @@
 package animals;
 
-import interfaces.IHerbivorous;
+import abc.Herbivorous;
 import interfaces.ILand;
 import Food.Grass;
 
-public class Horse implements IHerbivorous, ILand {
+public class Horse extends Herbivorous implements ILand {
+  private static final String type = "Horse";
 
-  @Override
+
   public void eat(Grass grass) {
-    System.out.format("Horse eat %s\n", grass);
+    super.eat(type, grass);
   }
 
   @Override

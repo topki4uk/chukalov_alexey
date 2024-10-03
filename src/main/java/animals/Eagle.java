@@ -5,11 +5,11 @@ import abc.Predator;
 import interfaces.Flying;
 
 public class Eagle extends Predator implements Flying {
-  protected final String type = "Eagle";
+  private final String type = "Eagle";
 
   @Override
   public void fly() {
-    System.out.printf("%s walk\n", type);
+    System.out.printf("%s fly\n", type);
   }
 
   public void eat(Meet meat) {

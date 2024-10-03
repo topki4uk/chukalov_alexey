@@ -5,7 +5,7 @@ import interfaces.Walking;
 import Food.Grass;
 
 public class Camel extends Herbivorous implements Walking {
-  private final String type = "Camel";
+  private static final String type = "Camel";
 
   public void eat(Grass grass) {
     super.eat(type, grass);

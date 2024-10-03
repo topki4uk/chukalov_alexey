@@ -2,9 +2,9 @@ package animals;
 
 import abc.Meet;
 import abc.Predator;
-import interfaces.IFlying;
+import interfaces.Flying;
 
-public class Eagle extends Predator implements IFlying {
+public class Eagle extends Predator implements Flying {
   protected final String type = "Eagle";
 
   @Override

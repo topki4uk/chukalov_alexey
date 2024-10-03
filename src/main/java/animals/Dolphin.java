@@ -3,10 +3,10 @@ package animals;
 import Food.FoodException;
 import abc.Meet;
 import abc.Predator;
-import interfaces.IAquatic;
+import interfaces.Swimming;
 import Food.Fish;
 
-public class Dolphin extends Predator implements IAquatic {
+public class Dolphin extends Predator implements Swimming {
   private final String type = "Dolphin";
 
   @Override

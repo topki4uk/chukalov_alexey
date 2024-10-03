@@ -1,6 +1,6 @@
 package interfaces;
 
 
-public interface IAquatic {
+public interface Swimming {
   void swim();
 }

@@ -1,10 +1,10 @@
 package animals;
 
 import abc.Herbivorous;
-import interfaces.ILand;
+import interfaces.Walking;
 import Food.Grass;
 
-public class Camel extends Herbivorous implements ILand {
+public class Camel extends Herbivorous implements Walking {
   private final String type = "Camel";
 
   public void eat(Grass grass) {

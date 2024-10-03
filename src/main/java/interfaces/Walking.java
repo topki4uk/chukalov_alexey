@@ -1,5 +1,5 @@
 package interfaces;
 
-public interface ILand {
+public interface Walking {
   void walk();
 }

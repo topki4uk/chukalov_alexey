@@ -4,9 +4,9 @@ import Food.Beef;
 import Food.FoodException;
 import abc.Meet;
 import abc.Predator;
-import interfaces.ILand;
+import interfaces.Walking;
 
-public class Tiger extends Predator implements ILand {
+public class Tiger extends Predator implements Walking {
   private final String type = "Tiger";
 
   @Override

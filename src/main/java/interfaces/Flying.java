@@ -1,5 +1,5 @@
 package interfaces;
 
-public interface IFlying {
+public interface Flying {
   void fly();
 }

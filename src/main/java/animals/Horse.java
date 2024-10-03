@@ -1,10 +1,10 @@
 package animals;
 
 import abc.Herbivorous;
-import interfaces.ILand;
+import interfaces.Walking;
 import Food.Grass;
 
-public class Horse extends Herbivorous implements ILand {
+public class Horse extends Herbivorous implements Walking {
   private static final String type = "Horse";
 
 

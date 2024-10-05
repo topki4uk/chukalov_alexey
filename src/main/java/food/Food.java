@@ -1,4 +1,4 @@
-package Food;
+package food;
 
 public enum Food {
   GRASS("grass"),

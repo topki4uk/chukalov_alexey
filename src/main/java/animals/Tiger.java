@@ -1,7 +1,7 @@
 package animals;
 
-import Food.Beef;
-import Food.FoodException;
+import food.Beef;
+import food.FoodException;
 import abc.Meet;
 import abc.Predator;
 import interfaces.Walking;
@@ -15,10 +15,10 @@ public class Tiger extends Predator implements Walking {
   }
 
   public void eat(Meet beef) {
-    if (!(beef instanceof Beef)) {
-      throw new FoodException("Couldn't eat this!");
+    if (beef instanceof Beef) {
+      super.eat(type, beef);
+      return;
     }
-
-    super.eat(type, beef);
+    throw new FoodException("Couldn't eat this!");
   }
 }

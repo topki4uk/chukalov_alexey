@@ -1,10 +1,10 @@
 package animals;
 
-import Food.FoodException;
+import food.FoodException;
 import abc.Meet;
 import abc.Predator;
 import interfaces.Swimming;
-import Food.Fish;
+import food.Fish;
 
 public class Dolphin extends Predator implements Swimming {
   private final String type = "Dolphin";
@@ -15,10 +15,10 @@ public class Dolphin extends Predator implements Swimming {
   }
 
   public void eat(Meet fish) {
-    if (!(fish instanceof Fish)) {
-      throw new FoodException("Couldn't eat this!");
+    if (fish instanceof Fish) {
+      super.eat(type, fish);
+      return;
     }
-
-    super.eat(type, fish);
+    throw new FoodException("Couldn't eat this!");
   }
 }

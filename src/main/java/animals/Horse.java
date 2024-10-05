@@ -2,7 +2,7 @@ package animals;
 
 import abc.Herbivorous;
 import interfaces.Walking;
-import Food.Grass;
+import food.Grass;
 
 public class Horse extends Herbivorous implements Walking {
   private final String type = "Horse";

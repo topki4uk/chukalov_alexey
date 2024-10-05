@@ -1,10 +1,10 @@
-package Food;
+package food;
 
 import abc.Meet;
 
 public class Fish extends Meet {
   @Override
-  public String toString() {
+  public String get() {
     return Food.FISH.getTitle();
   }
 }

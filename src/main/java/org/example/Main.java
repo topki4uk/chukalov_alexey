@@ -1,8 +1,8 @@
 package org.example;
 
-import Food.Beef;
-import Food.Fish;
-import Food.Grass;
+import food.Beef;
+import food.Fish;
+import food.Grass;
 import abc.Meet;
 import animals.*;
 

@@ -1,8 +1,7 @@
-package Food;
+package food;
 
 public class Grass {
-  @Override
-  public String toString() {
+  public String get() {
     return Food.GRASS.getTitle();
   }
 }

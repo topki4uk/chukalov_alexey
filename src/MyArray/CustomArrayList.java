@@ -1,4 +1,4 @@
-package Array;
+package MyArray;
 
 /***
  * Custom Array realisation with generics
@@ -20,7 +20,7 @@ public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
    * Constructor without params
    */
   public CustomArrayList() {
-    initialize(0);
+    initialize(1);
   }
 
   /***
@@ -31,6 +31,10 @@ public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
     size = 0;
     capacity = initCapacity;
     array = new Object[capacity];
+  }
+
+  public int size() {
+    return size;
   }
 
   /***
@@ -52,9 +56,8 @@ public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
     capacity *= 2;
 
     Object[] arr = new Object[capacity];
-    for (int i = 0; i < size; ++i) {
-      arr[i] = array[i];
-    }
+    if (size >= 0)
+      System.arraycopy(array, 0, arr, 0, size);
     array = arr;
   }
 

@@ -1,4 +1,4 @@
-package Array;
+package MyArray;
 
 /***
  * Interface of custom ArrayList

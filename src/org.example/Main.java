@@ -1,11 +1,10 @@
-package main;
+package org.example;
 
-import Array.AbstractCustomArrayList;
-import Array.CustomArrayList;
+import MyArray.CustomArrayList;
 
 public class Main {
   public static void main(String[] args) {
-    AbstractCustomArrayList<Double> array = new CustomArrayList<>(10);
+    CustomArrayList<Double> array = new CustomArrayList<>();
 
     array.add(10.0);
     array.add(4.3);

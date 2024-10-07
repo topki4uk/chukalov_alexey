@@ -1,31 +1,38 @@
-package MyArray;
+package my_array;
+
+import org.jetbrains.annotations.NotNull;
 
 /***
  * Custom Array realisation with generics
- * @param <T>
+ * @param <T> {@inheritDoc}
  */
 public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
+  private static final int INITIAL_CAPACITY = 10;
   private Object[] array;
   private int size;
   private int capacity;
 
   /***
-   * Constructor of the class. Initialize all variables
+   Constructor of the class. Initialize all variables
+   * @param initialCapacity initial capacity of the array
    */
   public CustomArrayList(int initialCapacity) {
+    if (initialCapacity > 0) {
+      throw new IllegalArgumentException("This is incorrect value of capacity!");
+    }
     initialize(initialCapacity);
   }
 
-  /***
-   * Constructor without params
+  /**
+   Constructor without params
    */
   public CustomArrayList() {
-    initialize(1);
+    initialize(INITIAL_CAPACITY);
   }
 
-  /***
+  /**
    * Initialize all variables in class
-   * @param initCapacity size of array in the beginning
+   * @param initCapacity size of array at the beginning
    */
   private void initialize(int initCapacity) {
     size = 0;
@@ -33,21 +40,40 @@ public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
     array = new Object[capacity];
   }
 
+  /**
+   * Checks that index in range
+   * @param i index that we proof
+   * @return true when i in range, else - false
+   */
+  private boolean checkIndex(int i) {
+    if (i < 0)
+      return false;
+
+    return i < size;
+  }
+
+  /**
+   * Size of array
+   * @return current size
+   */
   public int size() {
     return size;
   }
 
-  /***
+  /**
    * Get the element of array by index.
-   * @param i Index of element we need.
-   * @return We cast to some type the element.
+   * @param index {@inheritDoc}
+   * @return {@inheritDoc}
    */
   @Override
-  public T get(int i) {
-    return (T) array[i];
+  public T get(int index) {
+    if (!checkIndex(index))
+      throw new IndexOutOfBoundsException();
+
+    return (T) array[index];
   }
 
-  /***
+  /**
    * When array`s size become too small
    * this func change array`s size.
    * (Makes it bigger twice)
@@ -61,31 +87,33 @@ public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
     array = arr;
   }
 
-  /***
+  /**
    * Remove element from array by index.
-   * @param a Index of element.
+   *
+   * @param index {@inheritDoc}
+   * @return {@inheritDoc}
    */
   @Override
-  public void remove(int a) {
-    if (size >= capacity) {
-      resize();
-    }
-    for (int i = a; i < size; ++i) {
+  public T remove(int index) {
+    if (!checkIndex(index))
+      throw new IndexOutOfBoundsException();
+
+    T el = (T) array[index];
+    for (int i = index; i < size; ++i) {
       array[i] = array[i + 1];
     }
+
     array[--size] = null;
+    return el;
   }
 
-  /***
-   * Add element to th end of array.
-   * @param a Element we add.
+  /**
+   * {@inheritDoc}
+   *
+   * @param a {@inheritDoc}
    */
   @Override
-  public void add(T a) {
-    if (a == null) {
-      throw new RuntimeException("Could not save null in array.");
-    }
-
+  public void add(@NotNull T a) {
     if (size >= capacity) {
       resize();
     }
@@ -94,8 +122,9 @@ public class CustomArrayList<T> implements AbstractCustomArrayList<T> {
     size++;
   }
 
-  /***
+  /**
    * Cool output for array
+   *
    * @return String of array`s elements.
    */
   @Override

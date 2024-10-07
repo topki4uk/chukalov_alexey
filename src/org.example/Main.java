@@ -1,16 +1,23 @@
 package org.example;
 
-import MyArray.CustomArrayList;
+import my_array.CustomArrayList;
 
 public class Main {
   public static void main(String[] args) {
-    CustomArrayList<Double> array = new CustomArrayList<>();
+    CustomArrayList<Integer> array = new CustomArrayList<>();
 
-    array.add(10.0);
-    array.add(4.3);
+    array.add(10);
+    array.add(4);
+    array.add(7);
 
-    array.remove(0);
+    System.out.println(array);
+    System.out.println(array.get(1) + array.get(0));
+    System.out.println(array.size());
 
-    System.out.println(array.get(0));
+    array.remove(1);
+    array.add(22);
+
+    System.out.println(array.size());
+    System.out.println(array);
   }
 }

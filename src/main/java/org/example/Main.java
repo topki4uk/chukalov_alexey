@@ -1,4 +1,4 @@
-package example;
+package org.example;
 
 import commands.SortType;
 import executor.SortExecutor;

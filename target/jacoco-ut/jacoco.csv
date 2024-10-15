@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Archetype - homework4,executor,SortExecutor.new HashMap() {...},0,20,0,0,0,4,0,1,0,1
+Archetype - homework4,executor,SortExecutor,0,17,0,0,0,4,0,2,0,2
+Archetype - homework4,commands,BubbleSortCommand,0,71,0,8,0,13,0,7,0,3
+Archetype - homework4,commands,MergeSortCommand,0,24,0,2,0,8,0,4,0,3
+Archetype - homework4,commands,AbstractCommand,0,13,0,0,0,4,0,2,0,2
+Archetype - homework4,commands,SortType,0,15,0,0,0,3,0,1,0,1
+Archetype - homework4,example,Main,50,0,0,0,6,0,2,0,2,0

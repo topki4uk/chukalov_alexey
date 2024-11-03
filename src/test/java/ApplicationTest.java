@@ -48,8 +48,8 @@ class ApplicationTest {
 
     message = new Message(
             Map.of(EnrichmentType.MSISDN.getFieldName(), MSISDN,
-                    "favorite", FAVORITE,
-                    "course", COURSE
+                    ExtendedUserFields.FAVORITE.getFieldName(), FAVORITE,
+                ExtendedUserFields.COURSE.getFieldName(), COURSE
             ), EnrichmentType.MSISDN
     );
   }

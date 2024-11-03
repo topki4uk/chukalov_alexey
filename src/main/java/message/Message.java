@@ -21,6 +21,9 @@ public class Message {
   }
 
   public void updateContent(Enrichment enrichment) {
+    if (enrichment == null) {
+      throw new IllegalArgumentException("Enrichment wasn`t found!");
+    }
     content = enrichment.enrich(content);
   }
 

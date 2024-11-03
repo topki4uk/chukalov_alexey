@@ -14,6 +14,10 @@ public class EnrichmentService {
   }
 
   public Message enrich(Message message) {
+    if (message == null) {
+      return null;
+    }
+
     Executor executor = Executors.newFixedThreadPool(10);
     Message newMessage;
 

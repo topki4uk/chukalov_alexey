@@ -1,10 +1,10 @@
 package org.example;
 
 import enrichments.EnrichmentType;
-import enrichments.MSISDNEnrichment;
+import enrichments.MsisdnEnrichment;
 import message.Message;
 import service.EnrichmentService;
-import user.MyUserRepository;
+import user.ConcreteUserRepository;
 import user.User;
 
 import java.util.HashMap;
@@ -21,10 +21,10 @@ public class Main {
     User user = new User("Oleg", "Gazmanov");
 
     EnrichmentService service = new EnrichmentService();
-    MyUserRepository repo = new MyUserRepository();
+    ConcreteUserRepository repo = new ConcreteUserRepository();
     repo.updateUserByMsisdn(message.getContent().get("msisdn"), user);
 
-    service.addEnrichment(EnrichmentType.MSISDN, new MSISDNEnrichment(repo));
+    service.addEnrichment(EnrichmentType.MSISDN, new MsisdnEnrichment(repo));
     Message newMessage = service.enrich(message);
 
     System.out.println(newMessage.getContent());

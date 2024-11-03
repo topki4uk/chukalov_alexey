@@ -1,11 +1,12 @@
-package enrichments;
+package user;
 
-public enum EnrichmentType {
-  MSISDN("msisdn");
+public enum UserFields {
+  FIRST_NAME("firstName"),
+  LAST_NAME("lastName");
 
   private final String fieldName;
 
-  EnrichmentType(String fieldName) {
+  UserFields(String fieldName) {
     this.fieldName = fieldName;
   }
 

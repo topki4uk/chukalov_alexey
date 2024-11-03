@@ -2,7 +2,7 @@ package user;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MyUserRepository implements UserRepository {
+public class ConcreteUserRepository implements UserRepository {
   private final ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
 
   @Override

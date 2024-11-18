@@ -1,6 +1,7 @@
 package services;
 
 import data.*;
+import java.util.ArrayList;
 import repositories.ArticleRepository;
 import repositories.CommentRepository;
 
@@ -35,9 +36,21 @@ public class ArticleService {
     return addArticle(body);
   }
 
-  public void editArticle(ArticleID id, ArticleBody body) {
+  public ArticleID addArticle(String title, Set<String> tags) {
+    return addArticle(title, tags, new ArrayList<>());
+  }
+
+  public Article editArticle(ArticleID id, ArticleBody body) {
     Article article = new Article(id, body);
     articleRepository.editArticle(id, article);
+    return article;
+  }
+
+  public Article editArticle(ArticleID id, String title, Set<String> tags) {
+    Article article = new Article(id, title, tags,
+        articleRepository.getArticle(id).getComments());
+    articleRepository.editArticle(id, article);
+    return article;
   }
 
   public void deleteArticle(ArticleID id) {
@@ -45,10 +58,10 @@ public class ArticleService {
   }
 
   public CommentID addCommentToArticle(ArticleID id, String text) {
-    Article article = getArticleById(id);
-    CommentID commentId = commentRepository.genereateID();
-
+    CommentID commentId = commentRepository.generateID();
     Comment comment = new Comment(commentId, id, text);
+    commentRepository.addComment(comment);
+
     articleRepository.addCommentToArticle(id, comment);
     return commentId;
   }

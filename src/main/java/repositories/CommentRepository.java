@@ -1,7 +1,5 @@
 package repositories;
 
-import data.Article;
-import data.ArticleID;
 import data.Comment;
 import data.CommentID;
 import exceptions.CommentNotFoundException;
@@ -13,7 +11,7 @@ public class CommentRepository {
   private final CommentID commentID = new CommentID(0);
   Map<CommentID, Comment> comments = new ConcurrentHashMap<>();
 
-  public CommentID genereateID() {
+  public CommentID generateID() {
     return commentID.generate();
   }
 

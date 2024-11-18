@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class ArticleRepository implements Repository {
-  private final ArticleID articleID = new ArticleID(0);
+  private final AtomicLong articleID = new AtomicLong(0);
   Map<ArticleID, Article> articles = new ConcurrentHashMap<>();
 
   @Override
   public ArticleID genereateID() {
-    return articleID.generate();
+    return new ArticleID(articleID.incrementAndGet());
   }
 
   @Override
@@ -41,7 +42,7 @@ public class ArticleRepository implements Repository {
   }
 
   @Override
-  public void deleteArticle(ArticleID id) {
+  public synchronized void deleteArticle(ArticleID id) {
     Article article = articles.get(id);
     if (article == null) {
       throw new ArticleNotFoundException("Book with id=" + id + " not found!");
@@ -51,17 +52,17 @@ public class ArticleRepository implements Repository {
 
   @Override
   public synchronized ArticleID addArticle(Article article) {
-    articles.put(articleID, article);
-    return articleID;
+    articles.put(article.getId(), article);
+    return article.getId();
   }
 
   @Override
   public void addCommentToArticle(ArticleID id, Comment comment) {
     Article article = articles.get(id);
     if (article == null) {
-      throw new ArticleNotFoundException("Book with id=" + id + " not found!");
+      throw new ArticleNotFoundException("Article with id=" + id + " not found!");
     }
-    Article newArticle = getArticle(id).addComment(comment.setArticle(id));
+    Article newArticle = article.addComment(comment.setArticle(id));
     editArticle(id, newArticle);
   }
 

@@ -1,8 +1,13 @@
 package data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Comment {
+public class Comment implements Serializable {
+  @Serial
+  private static final long serialVersionUID = 1L;
+
   private final CommentID id;
   private final ArticleID articleId;
   private final String text;
@@ -15,6 +20,10 @@ public class Comment {
 
   public Comment setArticle(ArticleID articleId) {
     return new Comment(id, articleId, text);
+  }
+
+  public String getText() {
+    return text;
   }
 
   @Override

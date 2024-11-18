@@ -36,6 +36,22 @@ public class Article {
     return newArticle;
   }
 
+  public ArticleID getId() {
+    return id;
+  }
+
+  public List<Comment> getComments() {
+    return comments;
+  }
+
+  public Set<String> getTags() {
+    return tags;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
   @Override
   public String toString() {
     return String.format("ID=%s title=%s tags=%s comments=%s", id, title, tags, comments);
@@ -51,6 +67,6 @@ public class Article {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, tags, comments);
+    return Objects.hashCode(id);
   }
 }

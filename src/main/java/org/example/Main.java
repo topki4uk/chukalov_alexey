@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.ArticleController;
 import controller.ArticleFreeMarkerController;
 import free_marker.TemplateFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import repositories.ArticleRepository;
 import repositories.CommentRepository;
 import services.ArticleService;

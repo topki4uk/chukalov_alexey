@@ -4,6 +4,8 @@ import data.Article;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.ArticleService;
 import spark.ModelAndView;
 import spark.Request;
@@ -12,6 +14,7 @@ import spark.Service;
 import spark.template.freemarker.FreeMarkerEngine;
 
 public class ArticleFreeMarkerController implements Controller {
+  private static final Logger LOG = LoggerFactory.getLogger(ArticleFreeMarkerController.class);
   private final Service service;
   private final ArticleService articleService;
   private final FreeMarkerEngine freeMarkerEngine;
@@ -49,6 +52,8 @@ public class ArticleFreeMarkerController implements Controller {
 
           Map<String, Object> model = new HashMap<>();
           model.put("articles", articleMapList);
+
+          LOG.debug("Page with articles was viewed!");
           return freeMarkerEngine.render(
               new ModelAndView(model, "index.ftl")
           );

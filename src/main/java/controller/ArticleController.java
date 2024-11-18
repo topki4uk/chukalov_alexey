@@ -14,6 +14,8 @@ import json.ArticleGetResponse;
 import json.CommentCreateRequest;
 import json.CommentDeleteRequest;
 import json.ErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import services.ArticleService;
 import spark.Request;
 import spark.Response;
@@ -22,6 +24,7 @@ import spark.Service;
 import java.util.*;
 
 public class ArticleController implements Controller {
+  private static final Logger LOG = LoggerFactory.getLogger(ArticleController.class);
   private final Service service;
   private final ArticleService articleService;
   private final ObjectMapper objectMapper;
@@ -53,6 +56,9 @@ public class ArticleController implements Controller {
               objectMapper.readValue(body, ArticleDeleteRequest.class);
 
           articleService.deleteArticle(new ArticleID(deleteRequest.id));
+
+          LOG.debug("Article with id={} was deleted", deleteRequest.id);
+
           response.status(200);
           return "success!!";
         });
@@ -71,6 +77,8 @@ public class ArticleController implements Controller {
               new ArticleID(deleteRequest.articleId),
               new CommentID(deleteRequest.commentId)
           );
+
+          LOG.debug("Comment with id={} was deleted", deleteRequest.commentId);
           return "success!!";
         });
   }
@@ -85,6 +93,8 @@ public class ArticleController implements Controller {
 
           Article edited = articleService.editArticle(
                   new ArticleID(editRequest.articleId), editRequest.title, editRequest.tags);
+
+          LOG.debug("Article with id={} was edited", editRequest.articleId);
 
           return objectMapper.writeValueAsString(new ArticleGetResponse(
               edited.getTitle(),
@@ -101,6 +111,8 @@ public class ArticleController implements Controller {
               response.type("application/json");
               List<Article> articles = articleService.getAll();
 
+              LOG.debug("Get all articles {}", articles);
+
               return objectMapper.writeValueAsString(new AllArticlesResponse(articles));
             });
   }
@@ -116,7 +128,10 @@ public class ArticleController implements Controller {
               );
               try {
                 ArticleID id = articleService.addArticle(createRequest.title, createRequest.tags);
-                response.status(201);
+
+                LOG.debug("Article with id={} was added", id.getID());
+
+                response.status(200);
                 return objectMapper.writeValueAsString(new ArticleCreateResponse(id));
               } catch (Exception e) {
                 response.status(400);
@@ -139,6 +154,12 @@ public class ArticleController implements Controller {
               createRequest.articleId,
               createRequest.text
           );
+
+          LOG.debug("Comment with id={} was added successfully to article with id={}",
+              commentId.getID(),
+              createRequest.articleId.getID()
+          );
+
           response.status(200);
           return commentId;
         }
@@ -152,6 +173,9 @@ public class ArticleController implements Controller {
           response.type("application/json");
           ArticleID id = new ArticleID(Long.parseLong(request.queryParams("id")));
           Article article = articleService.getArticleById(id);
+
+          LOG.debug("Article with id={} was got successfully", id.getID());
+
           return objectMapper.writeValueAsString(new ArticleGetResponse(
               article.getTitle(),
               article.getTags(),

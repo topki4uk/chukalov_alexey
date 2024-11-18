@@ -8,7 +8,6 @@ import data.CommentID;
 import exceptions.ArticleNotFoundException;
 import json.AllArticlesResponse;
 import json.ArticleCreateRequest;
-import json.ArticleCreateResponse;
 import json.ArticleDeleteRequest;
 import json.ArticleEditRequest;
 import json.ArticleGetResponse;
@@ -47,7 +46,7 @@ public class ArticleController implements Controller {
   }
 
   private void deleteArticle() {
-    service.delete(
+    service.post(
         "/api/delete/article",
         (Request request, Response response) -> {
           response.type("application/json");
@@ -73,7 +72,7 @@ public class ArticleController implements Controller {
   }
 
   private void deleteComment() {
-    service.delete(
+    service.post(
         "/api/delete/comment",
         (Request request, Response response) -> {
           response.type("application/json");
@@ -163,7 +162,7 @@ public class ArticleController implements Controller {
                 ArticleID id = articleService.addArticle(createRequest.title, createRequest.tags);
                 LOG.debug("Article with id={} was added", id.getID());
                 response.status(200);
-                return objectMapper.writeValueAsString(new ArticleCreateResponse(id));
+                return objectMapper.writeValueAsString(id);
               } catch (Exception e) {
                 response.status(500);
                 LOG.error("Something went wrong!!");

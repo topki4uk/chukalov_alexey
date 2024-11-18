@@ -14,7 +14,7 @@ public class ArticleRepository implements Repository {
   Map<ArticleID, Article> articles = new ConcurrentHashMap<>();
 
   @Override
-  public ArticleID genereateID() {
+  public ArticleID generateID() {
     return new ArticleID(articleID.incrementAndGet());
   }
 
@@ -70,7 +70,7 @@ public class ArticleRepository implements Repository {
   public void deleteCommentFromArticle(ArticleID articleId, Comment comment) {
     Article article = articles.get(articleId);
     if (article == null) {
-      throw new ArticleNotFoundException("Book with id=" + articleId + " not found!");
+      throw new ArticleNotFoundException("Article with id=" + articleId + " not found!");
     }
     editArticle(articleId, article.deleteComment(comment));
   }

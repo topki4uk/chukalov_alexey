@@ -5,7 +5,7 @@ import data.*;
 import java.util.List;
 
 public interface Repository {
-  ArticleID genereateID();
+  ArticleID generateID();
 
   List<Article> getAll();
   Article getArticle(ArticleID id);

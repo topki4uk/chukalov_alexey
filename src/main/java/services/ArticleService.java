@@ -26,7 +26,7 @@ public class ArticleService {
   }
 
   public ArticleID addArticle(ArticleBody body) {
-    ArticleID id = articleRepository.genereateID();
+    ArticleID id = articleRepository.generateID();
     Article article = new Article(id, body);
     return articleRepository.addArticle(article);
   }

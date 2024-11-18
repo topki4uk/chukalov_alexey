@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import data.Article;
 import data.ArticleID;
 import data.CommentID;
+import exceptions.ArticleNotFoundException;
 import json.AllArticlesResponse;
 import json.ArticleCreateRequest;
 import json.ArticleCreateResponse;
@@ -13,7 +14,6 @@ import json.ArticleEditRequest;
 import json.ArticleGetResponse;
 import json.CommentCreateRequest;
 import json.CommentDeleteRequest;
-import json.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.ArticleService;
@@ -55,12 +55,20 @@ public class ArticleController implements Controller {
           ArticleDeleteRequest deleteRequest =
               objectMapper.readValue(body, ArticleDeleteRequest.class);
 
-          articleService.deleteArticle(new ArticleID(deleteRequest.id));
-
-          LOG.debug("Article with id={} was deleted", deleteRequest.id);
-
-          response.status(200);
-          return "success!!";
+          try {
+            articleService.deleteArticle(new ArticleID(deleteRequest.id));
+            LOG.debug("Article with id={} was deleted", deleteRequest.id);
+            response.status(200);
+            return Map.of("statusCode", 200);
+          } catch (ArticleNotFoundException e) {
+            LOG.warn("Article with id={} didn't exist", deleteRequest.id);
+            response.status(404);
+            return Map.of("statusCode", 404);
+          } catch (Exception exception) {
+            LOG.error("Something went wrong!");
+            response.status(500);
+            return Map.of("statusCode", 500);
+          }
         });
   }
 
@@ -73,13 +81,23 @@ public class ArticleController implements Controller {
           CommentDeleteRequest deleteRequest =
               objectMapper.readValue(body, CommentDeleteRequest.class);
 
-          articleService.deleteComment(
-              new ArticleID(deleteRequest.articleId),
-              new CommentID(deleteRequest.commentId)
-          );
-
-          LOG.debug("Comment with id={} was deleted", deleteRequest.commentId);
-          return "success!!";
+          try {
+            articleService.deleteComment(
+                    new ArticleID(deleteRequest.articleId),
+                    new CommentID(deleteRequest.commentId)
+            );
+            LOG.debug("Comment with id={} was deleted", deleteRequest.commentId);
+            response.status(200);
+            return Map.of("statusCode", 200);
+          } catch (ArticleNotFoundException e) {
+            LOG.warn("Comment with id={} didn't exist", deleteRequest.commentId);
+            response.status(404);
+            return Map.of("statusCode", 404);
+          } catch (Exception exception) {
+            LOG.error("Something went wrong!");
+            response.status(500);
+            return Map.of("statusCode", 500);
+          }
         });
   }
 
@@ -91,16 +109,25 @@ public class ArticleController implements Controller {
           String body = request.body();
           ArticleEditRequest editRequest = objectMapper.readValue(body, ArticleEditRequest.class);
 
-          Article edited = articleService.editArticle(
-                  new ArticleID(editRequest.articleId), editRequest.title, editRequest.tags);
-
-          LOG.debug("Article with id={} was edited", editRequest.articleId);
-
-          return objectMapper.writeValueAsString(new ArticleGetResponse(
-              edited.getTitle(),
-              edited.getTags(),
-              edited.getComments()
-          ));
+          try {
+            Article edited = articleService.editArticle(
+                    new ArticleID(editRequest.articleId), editRequest.title, editRequest.tags);
+            LOG.debug("Article with id={} was edited", editRequest.articleId);
+            response.status(200);
+            return objectMapper.writeValueAsString(new ArticleGetResponse(
+                    edited.getTitle(),
+                    edited.getTags(),
+                    edited.getComments()
+            ));
+          } catch (ArticleNotFoundException e) {
+            LOG.warn("Article with id={} didn't exist", editRequest.articleId);
+            response.status(404);
+            return Map.of("statusCode", 404);
+          } catch (Exception exception) {
+            LOG.error("Something went wrong!");
+            response.status(500);
+            return Map.of("statusCode", 500);
+          }
         });
   }
 
@@ -109,11 +136,17 @@ public class ArticleController implements Controller {
             "/api/all",
             (Request request, Response response) -> {
               response.type("application/json");
-              List<Article> articles = articleService.getAll();
 
-              LOG.debug("Get all articles {}", articles);
-
-              return objectMapper.writeValueAsString(new AllArticlesResponse(articles));
+              try {
+                List<Article> articles = articleService.getAll();
+                LOG.debug("Get all articles {}", articles);
+                response.status(200);
+                return objectMapper.writeValueAsString(new AllArticlesResponse(articles));
+              } catch (Exception e) {
+                LOG.error("Something went wrong!");
+                response.status(500);
+                return Map.of("statusCode", 500);
+              }
             });
   }
 
@@ -128,14 +161,13 @@ public class ArticleController implements Controller {
               );
               try {
                 ArticleID id = articleService.addArticle(createRequest.title, createRequest.tags);
-
                 LOG.debug("Article with id={} was added", id.getID());
-
                 response.status(200);
                 return objectMapper.writeValueAsString(new ArticleCreateResponse(id));
               } catch (Exception e) {
-                response.status(400);
-                return objectMapper.writeValueAsString(new ErrorResponse(e.getMessage()));
+                response.status(500);
+                LOG.error("Something went wrong!!");
+                return Map.of("statusCode", 500);
               }
             }
     );
@@ -150,18 +182,28 @@ public class ArticleController implements Controller {
               body, CommentCreateRequest.class
           );
 
-          CommentID commentId = articleService.addCommentToArticle(
-              createRequest.articleId,
-              createRequest.text
-          );
+          try {
+            CommentID commentId = articleService.addCommentToArticle(
+                    createRequest.articleId,
+                    createRequest.text
+            );
 
-          LOG.debug("Comment with id={} was added successfully to article with id={}",
-              commentId.getID(),
-              createRequest.articleId.getID()
-          );
+            LOG.debug("Comment with id={} was added successfully to article with id={}",
+                    commentId.getID(),
+                    createRequest.articleId.getID()
+            );
 
-          response.status(200);
-          return commentId;
+            response.status(200);
+            return commentId;
+          } catch (ArticleNotFoundException e) {
+            LOG.warn("Comment with id={} was not found!", createRequest.articleId.getID());
+            response.status(404);
+            return Map.of("statusCode", 404);
+          } catch (Exception e) {
+            LOG.error("Something went wrong!");
+            response.status(500);
+            return Map.of("statusCode", 500);
+          }
         }
     );
   }
@@ -172,15 +214,27 @@ public class ArticleController implements Controller {
         (Request request, Response response) -> {
           response.type("application/json");
           ArticleID id = new ArticleID(Long.parseLong(request.queryParams("id")));
-          Article article = articleService.getArticleById(id);
 
-          LOG.debug("Article with id={} was got successfully", id.getID());
+          try {
+            Article article = articleService.getArticleById(id);
 
-          return objectMapper.writeValueAsString(new ArticleGetResponse(
-              article.getTitle(),
-              article.getTags(),
-              article.getComments()
-          ));
+            LOG.debug("Article with id={} was got successfully", id.getID());
+
+            response.status(200);
+            return objectMapper.writeValueAsString(new ArticleGetResponse(
+                    article.getTitle(),
+                    article.getTags(),
+                    article.getComments()
+            ));
+          } catch (ArticleNotFoundException e) {
+            LOG.debug("Article with id={} was not found!", id.getID());
+            response.status(404);
+            return Map.of("responseCode", 404);
+          } catch (Exception e) {
+            LOG.debug("Something went wrong!!");
+            response.status(500);
+            return Map.of("responseCode", 500);
+          }
         });
   }
 }

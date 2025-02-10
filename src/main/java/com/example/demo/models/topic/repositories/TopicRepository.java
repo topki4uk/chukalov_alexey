@@ -1,0 +1,19 @@
+package com.example.demo.models.topic.repositories;
+
+import com.example.demo.models.topic.Topic;
+import com.example.demo.models.topic.TopicId;
+import com.example.demo.models.user.UserId;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface TopicRepository {
+    Optional<Topic> findById(@NotNull TopicId topicId);
+
+    @NotNull Topic create(@NotNull Topic topic);
+
+    @NotNull List<Topic> getAll();
+
+    void delete(@NotNull UserId userId, @NotNull TopicId topicId);
+}

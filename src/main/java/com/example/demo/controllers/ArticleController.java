@@ -6,6 +6,8 @@ import com.example.demo.models.article.ArticleData;
 import com.example.demo.models.user.UserId;
 import com.example.demo.services.ArticleService;
 import com.example.demo.services.TopicService;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/articles")
 public final class ArticleController {
+    private static final Logger LOG = LoggerFactory.getLogger(ArticleController.class);
+
     private final ArticleService articleService;
     private final TopicService topicService;
 
@@ -35,6 +39,7 @@ public final class ArticleController {
             String topicDescription = topicService.findById(article.topicId()).get().description();
             articleData.add(new ArticleData(article.title(), article.url(), article.createdAt(), topicDescription));
         }
+        LOG.debug("Articles of user with id={} was found successfully", userId);
         return ResponseEntity.ok(articleData);
     }
 }

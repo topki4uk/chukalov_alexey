@@ -5,7 +5,6 @@ import com.example.demo.models.website.Website;
 import com.example.demo.models.website.WebsiteId;
 import com.example.demo.models.website.repositories.InMemoryWebsiteRepository;
 import com.example.demo.models.website.repositories.WebsiteRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +29,10 @@ public final class WebsiteService {
 
     public List<Website> getAll() {
         return websiteRepository.getAll();
+    }
+
+    public void delete(UserId userId, WebsiteId websiteId) {
+        websiteRepository.delete(websiteId, userId);
     }
 
     public List<Website> findSubscribedWebsitesByUserId(UserId creatorId) {

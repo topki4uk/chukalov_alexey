@@ -1,5 +1,6 @@
 package com.example.demo.models.topic;
 
+import com.example.demo.models.user.UserId;
 import com.example.demo.models.user.exceptions.UserInitializationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,26 +9,25 @@ import java.util.Objects;
 
 public record Topic(
         @Nullable TopicId id,
-        @NotNull String description
-) {
-    public static final Topic TOPIC_1 = new Topic(new TopicId(1L), "test_description_1");
-    public static final Topic TOPIC_2 = new Topic(new TopicId(2L), "test_description_2");
-    public Topic {}
-
-    public Topic(final @NotNull String description){
-        this(null, description);
-    }
+        @NotNull String description,
+        @NotNull UserId userId
+        ) {
+    public static final Topic TOPIC_1 = new Topic(new TopicId(1L), "test_description_1", new UserId(1L));
+    public static final Topic TOPIC_2 = new Topic(new TopicId(2L), "test_description_2", new UserId(2L));
 
     public Topic initializeWithId(final @NotNull TopicId newId) {
         if (id != null) {
             throw new UserInitializationException("Topic is already initialized");
         }
-
-        return new Topic(newId, description);
+        return new Topic(newId, description, userId);
     }
 
     public Topic withDescription(final @NotNull String newDescription) {
-        return new Topic(id, newDescription);
+        return new Topic(id, newDescription, userId);
+    }
+
+    public Topic withUserId(final @NotNull UserId newUserId) {
+        return new Topic(id, description, newUserId);
     }
 
     @Override

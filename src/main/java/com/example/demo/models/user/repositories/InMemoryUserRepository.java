@@ -43,7 +43,7 @@ public final class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void update(@NotNull User user) {
-
+        return;
     }
 
     @Override

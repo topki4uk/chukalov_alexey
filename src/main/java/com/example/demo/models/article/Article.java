@@ -1,7 +1,5 @@
 package com.example.demo.models.article;
 
-
-
 import com.example.demo.models.article.exceptions.ArticleInitializationException;
 import com.example.demo.models.topic.TopicId;
 import com.example.demo.models.website.WebsiteId;

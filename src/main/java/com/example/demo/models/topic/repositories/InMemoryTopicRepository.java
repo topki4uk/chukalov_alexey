@@ -4,6 +4,7 @@ import com.example.demo.models.topic.Topic;
 import com.example.demo.models.topic.TopicId;
 import com.example.demo.models.topic.exceptions.TopicAlreadyExistsException;
 import com.example.demo.models.topic.exceptions.TopicNotFoundException;
+import com.example.demo.models.user.UserId;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
@@ -41,7 +42,7 @@ public class InMemoryTopicRepository implements TopicRepository {
     }
 
     @Override
-    public void delete(@NotNull TopicId topicId) {
-
+    public void delete(@NotNull UserId userId, @NotNull TopicId topicId) {
+        return;
     }
 }

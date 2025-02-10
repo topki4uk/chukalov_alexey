@@ -2,6 +2,7 @@ package com.example.demo.models.topic.repositories;
 
 import com.example.demo.models.topic.Topic;
 import com.example.demo.models.topic.TopicId;
+import com.example.demo.models.user.UserId;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface TopicRepository {
 
     @NotNull List<Topic> getAll();
 
-    void delete(@NotNull TopicId topicId);
+    void delete(@NotNull UserId userId, @NotNull TopicId topicId);
 }

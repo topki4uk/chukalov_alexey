@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.example.demo.models.article.Article;
 import com.example.demo.models.article.ArticleListData;
-import com.example.demo.models.article.repositories.InMemoryArticleRepository;
 import com.example.demo.models.topic.Topic;
 import com.example.demo.models.topic.TopicList;
 import com.example.demo.models.user.User;

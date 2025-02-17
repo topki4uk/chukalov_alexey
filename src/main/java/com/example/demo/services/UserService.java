@@ -23,4 +23,8 @@ public final class UserService {
     public User register(User user) {
         return userRepository.create(user);
     }
+
+    public void update(User user) {
+        userRepository.update(user);
+    }
 }

@@ -2,14 +2,19 @@ package com.example.demo.models.topic;
 
 import com.example.demo.models.user.UserId;
 import com.example.demo.models.user.exceptions.UserInitializationException;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+@Schema(name = "Topic", description = "Сущность топика")
 public record Topic(
+        @Schema(description = "ID", example = "1")
         @Nullable TopicId id,
+        @Schema(description = "description", example = "Test description")
         @NotNull String description,
+        @Schema(description = "user_id", example = "1")
         @NotNull UserId userId
         ) {
     public static final Topic TOPIC_1 = new Topic(new TopicId(1L), "test_description_1", new UserId(1L));

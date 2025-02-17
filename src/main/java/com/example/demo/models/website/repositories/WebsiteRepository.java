@@ -30,6 +30,8 @@ public interface WebsiteRepository {
      */
     void update(@NotNull Website website);
 
+    void updateUrl(@NotNull Website website);
+
     /**
      * @throws WebsiteNotFoundException if the website does not exist
      */

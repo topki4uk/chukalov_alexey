@@ -6,14 +6,13 @@ import com.example.demo.models.user.UserId;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TopicRepository {
-    Optional<Topic> findById(@NotNull TopicId topicId);
+    Topic findById(@NotNull TopicId topicId);
 
     @NotNull Topic create(@NotNull Topic topic);
 
-    @NotNull List<Topic> getAll();
+    @NotNull List<Topic> getUserTopics(Long userId);
 
     void delete(@NotNull UserId userId, @NotNull TopicId topicId);
 }

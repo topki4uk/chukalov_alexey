@@ -1,6 +1,5 @@
 package com.example.demo.models.topic.exceptions;
 
-
 import com.example.demo.models.topic.TopicId;
 
 public class TopicAlreadyExistsException extends RuntimeException {

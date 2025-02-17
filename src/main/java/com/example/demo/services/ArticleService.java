@@ -22,6 +22,10 @@ public final class ArticleService {
         return articleRepository.findById(articleId);
     }
 
+    public void updateTitle(Article article) {
+        articleRepository.updateTitle(article);
+    }
+
     public List<Article> getAllUnknown(UserId userId) {
         return articleRepository.getAllUnknown(userId);
     }

@@ -32,12 +32,18 @@ public final class InMemoryArticleRepository implements ArticleRepository {
 
     @Override
     public @NotNull Article create(@NotNull Article article) {
-        return null;
+
+      return article;
     }
 
     @Override
     public void update(@NotNull Article article) {
 
+    }
+
+    @Override
+    public void updateTitle(@NotNull Article article) {
+        update(article);
     }
 
     @Override

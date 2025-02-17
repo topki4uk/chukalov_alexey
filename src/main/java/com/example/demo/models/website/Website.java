@@ -2,15 +2,21 @@ package com.example.demo.models.website;
 
 import com.example.demo.models.user.UserId;
 import com.example.demo.models.user.exceptions.UserInitializationException;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+@Schema(name = "Website", example = "Сущность сайта")
 public record Website(
+        @Schema(description = "ID", example = "1")
         @Nullable WebsiteId id,
+        @Schema(description = "url", example = "http://test.com")
         @NotNull String url,
+        @Schema(description = "description", example = "Test description")
         @NotNull String description,
+        @Schema(description = "creator_id", example = "1")
         @NotNull UserId creatorId
 ) {
     public static final Website WEBSITE_1 = new Website(

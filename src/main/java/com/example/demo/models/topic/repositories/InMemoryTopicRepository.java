@@ -10,17 +10,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class InMemoryTopicRepository implements TopicRepository {
     List<Topic> topics = new ArrayList<>(List.of(Topic.TOPIC_1, Topic.TOPIC_2));
 
     @Override
-    public Optional<Topic> findById(@NotNull TopicId topicId) {
+    public Topic findById(@NotNull TopicId topicId) {
         for (Topic topic : topics) {
             if (topic.id().equals(topicId)) {
-                return Optional.of(topic);
+                return topic;
             }
         }
         throw new TopicNotFoundException(topicId);
@@ -37,8 +36,14 @@ public class InMemoryTopicRepository implements TopicRepository {
     }
 
     @Override
-    public @NotNull List<Topic> getAll() {
-        return topics;
+    public @NotNull List<Topic> getUserTopics(Long userId) {
+        List<Topic> topicListForUser = new ArrayList<>();
+        for (Topic topic : topics) {
+            if (topic.userId().getId().equals(userId)) {
+                topicListForUser.add(topic);
+            }
+        }
+        return topicListForUser;
     }
 
     @Override

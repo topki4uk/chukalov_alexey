@@ -27,6 +27,14 @@ public final class WebsiteService {
         return websiteRepository.create(website);
     }
 
+    public void update(Website website) {
+        websiteRepository.update(website);
+    }
+
+    public void updateUrl(Website website) {
+        websiteRepository.updateUrl(website);
+    }
+
     public List<Website> getAll() {
         return websiteRepository.getAll();
     }

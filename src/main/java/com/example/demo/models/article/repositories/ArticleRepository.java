@@ -17,5 +17,7 @@ public interface ArticleRepository {
 
     void update(@NotNull Article article);
 
+    void updateTitle(@NotNull Article article);
+
     void delete(@NotNull ArticleId articleId);
 }

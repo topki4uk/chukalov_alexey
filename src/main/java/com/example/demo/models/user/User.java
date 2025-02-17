@@ -1,15 +1,21 @@
 package com.example.demo.models.user;
 
 import com.example.demo.models.user.exceptions.UserInitializationException;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+@Schema(name = "User", description = "Сущность пользователя")
 public record User(
+        @Schema(description = "ID", example = "1")
         @Nullable UserId id,
+        @Schema(description = "E-mail", example = "test@mail.ru")
         @NotNull String email,
+        @Schema(description = "password", example = "test1234")
         @NotNull String password,
+        @Schema(description = "username", example = "test")
         @NotNull String username
 ) {
     public static final User USER_1 = new User(

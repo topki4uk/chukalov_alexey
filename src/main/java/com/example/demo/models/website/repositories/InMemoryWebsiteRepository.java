@@ -57,6 +57,11 @@ public class InMemoryWebsiteRepository implements WebsiteRepository {
     }
 
     @Override
+    public void updateUrl(@NotNull Website website) {
+        update(website);
+    }
+
+    @Override
     public void delete(@NotNull WebsiteId userId, @NotNull UserId creatorId) {
 
     }

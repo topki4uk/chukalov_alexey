@@ -3,6 +3,7 @@ package com.example.demo.models.article;
 import com.example.demo.models.article.exceptions.ArticleInitializationException;
 import com.example.demo.models.topic.TopicId;
 import com.example.demo.models.website.WebsiteId;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,12 +11,19 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
+@Schema(name = "Article", description = "Сущность статьи")
 public record Article(
+        @Schema(description = "ID", example = "1")
         @Nullable ArticleId id,
+        @Schema(description = "title", example = "test-title")
         @NotNull String title,
+        @Schema(description = "url", example = "http://test.ru")
         @NotNull String url,
+        @Schema(description = "created_at")
         @NotNull Timestamp createdAt,
+        @Schema(description = "topic_id", example = "1")
         @NotNull TopicId topicId,
+        @Schema(description = "website_id", example = "1")
         @NotNull WebsiteId websiteId
         ) {
     public static final Article ARTICLE_1 = new Article(

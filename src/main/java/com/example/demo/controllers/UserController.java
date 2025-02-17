@@ -3,7 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.models.user.User;
 import com.example.demo.models.user.UserData;
 import com.example.demo.models.user.UserId;
+import com.example.demo.operations.UserOperations;
 import com.example.demo.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("api/user")
-public final class UserController {
+@RequestMapping("api/users")
+@Tag(name = "User API", description = "Управление пользователями")
+public final class UserController implements UserOperations {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
@@ -23,19 +26,32 @@ public final class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<User> get(Long id) {
         Optional<User> user = userService.findById(new UserId(id));
         LOG.debug("User with id={} found successfully", id);
         return ResponseEntity.ok(user.get());
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<User> update(@RequestBody UserData userData) {
+    @Override
+    public ResponseEntity<User> register(UserData userData) {
         User user = userService.register(new User(
                 new UserId(null), userData.email(), userData.password(), userData.username()
         ));
         LOG.debug("User with id={} created successfully", user.id().getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @Override
+    public ResponseEntity<String> update(UserData userData, Long id) {
+        User newUser = new User(
+            new UserId(id),
+            userData.email(),
+            userData.password(),
+            userData.username()
+        );
+        userService.update(newUser);
+        LOG.debug("User with id={} updated successfully", id);
+        return ResponseEntity.ok("User updated!");
     }
 }

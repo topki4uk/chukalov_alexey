@@ -39,7 +39,7 @@ public class GetMethodsEnd2EndTest {
     );
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(
-        response.getBody().articleDataList().getFirst().title(),
+        response.getBody().articleDataList().get(0).title(),
         Article.ARTICLE_1.title()
     );
   }
@@ -49,7 +49,7 @@ public class GetMethodsEnd2EndTest {
     ResponseEntity<Topic> response =
         restTemplate.getForEntity("http://localhost:" + port + "/api/topics" + "/1", Topic.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), Topic.TOPIC_1);
+    assertEquals(Topic.TOPIC_1, response.getBody());
   }
 
   @Test
@@ -65,7 +65,7 @@ public class GetMethodsEnd2EndTest {
     ResponseEntity<Website> response =
         restTemplate.getForEntity("http://localhost:" + port + "/api/websites" + "/1", Website.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), Website.WEBSITE_1);
+    assertEquals(Website.WEBSITE_1, response.getBody());
   }
 
   @Test
@@ -81,6 +81,6 @@ public class GetMethodsEnd2EndTest {
     ResponseEntity<User> response =
         restTemplate.getForEntity("http://localhost:" + port + "/api/users" + "/1", User.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), User.USER_1);
+    assertEquals(User.USER_1, response.getBody());
   }
 }

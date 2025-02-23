@@ -16,9 +16,12 @@ public class SecurityConfig {
   @Autowired
   private JwtTokenFilter jwtTokenFilter;
 
+  @Bean
   protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(request -> request.anyRequest().hasAnyRole("ADMIN", "USER"))
-        .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    http.authorizeHttpRequests(
+        auth -> auth.anyRequest().permitAll()
+    ).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
     return http.build();
   }
 }

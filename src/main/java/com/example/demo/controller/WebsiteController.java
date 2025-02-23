@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 import com.example.demo.models.user.UserId;
 import com.example.demo.models.website.Website;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/websites")
 @Tag(name = "Website API", description = "Управление сайтами")
-public final class WebsiteController implements WebsiteOperations {
+public class WebsiteController implements WebsiteOperations {
     private static final Logger LOG = LoggerFactory.getLogger(WebsiteController.class);
 
     @Autowired

@@ -1,6 +1,6 @@
 package com.example.demo.topic;
 
-import com.example.demo.controllers.TopicController;
+import com.example.demo.controller.TopicController;
 import com.example.demo.models.topic.Topic;
 import com.example.demo.models.topic.TopicId;
 import com.example.demo.models.topic.exceptions.TopicNotFoundException;

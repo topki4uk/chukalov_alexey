@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 import com.example.demo.models.user.User;
 import com.example.demo.models.user.UserData;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("api/users")
 @Tag(name = "User API", description = "Управление пользователями")
-public final class UserController implements UserOperations {
+public class UserController implements UserOperations {
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 

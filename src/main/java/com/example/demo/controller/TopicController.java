@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 import com.example.demo.models.topic.Topic;
 import com.example.demo.models.topic.TopicData;
@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/topics")
 @Tag(name = "Topic API", description = "Управление топиками")
-public final class TopicController implements TopicOperations {
+public class TopicController implements TopicOperations {
     private static final Logger LOG = LoggerFactory.getLogger(TopicController.class);
 
     @Autowired

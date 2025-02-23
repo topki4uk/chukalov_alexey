@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controller;
 
 
 import com.example.demo.models.article.ArticleId;
@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/articles")
 @Tag(name = "Article API", description = "Управление статьями")
-public final class ArticleController implements ArticleOperations {
+public class ArticleController implements ArticleOperations {
     private static final Logger LOG = LoggerFactory.getLogger(ArticleController.class);
 
     private final ArticleService articleService;

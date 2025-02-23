@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public final class InMemoryArticleRepository implements ArticleRepository {
+public class InMemoryArticleRepository implements ArticleRepository {
     List<Article> articles = new ArrayList<>(List.of(Article.ARTICLE_1, Article.ARTICLE_2));
 
     @Override

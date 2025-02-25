@@ -1,14 +1,14 @@
 package com.example.demo;
 
-import com.example.demo.models.article.exceptions.ArticleInitializationException;
-import com.example.demo.models.article.exceptions.ArticleNotFoundException;
-import com.example.demo.models.topic.exceptions.TopicAlreadyExistsException;
-import com.example.demo.models.topic.exceptions.TopicNotFoundException;
-import com.example.demo.models.user.exceptions.EmailConflictException;
-import com.example.demo.models.user.exceptions.UserInitializationException;
-import com.example.demo.models.user.exceptions.UserNotFoundException;
-import com.example.demo.models.website.exceptions.WebsiteAlreadyExistsException;
-import com.example.demo.models.website.exceptions.WebsiteNotFoundException;
+import com.example.demo.exception.ArticleInitializationException;
+import com.example.demo.exception.ArticleNotFoundException;
+import com.example.demo.exception.TopicAlreadyExistsException;
+import com.example.demo.exception.TopicNotFoundException;
+import com.example.demo.exception.EmailConflictException;
+import com.example.demo.exception.UserInitializationException;
+import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.exception.WebsiteAlreadyExistsException;
+import com.example.demo.exception.WebsiteNotFoundException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -102,7 +102,7 @@ public class DemoExceptionHandler {
     )
     @ExceptionHandler(UserInitializationException.class)
     public ResponseEntity<String> handleUserInitializationException(UserInitializationException e) {
-        LOG.warn("Website not found: {}", e.getMessage());
+        LOG.warn("User not initialize: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
@@ -113,7 +113,7 @@ public class DemoExceptionHandler {
     )
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
-        LOG.warn("Website not found: {}", e.getMessage());
+        LOG.warn("User not found: {}", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }

@@ -1,8 +1,8 @@
 package com.example.demo.model.topic;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
-public final class TopicId {
-    private final Long id;
+@Value
+public class TopicId {
+    Long id;
 }

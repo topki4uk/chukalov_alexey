@@ -1,12 +1,8 @@
 package com.example.demo.model.article;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Value;
 
-@AllArgsConstructor
-@Getter
-@EqualsAndHashCode
+@Value
 public class ArticleId {
-    private final Long id;
+    Long id;
 }

@@ -23,7 +23,7 @@ public interface ArticleOperations {
   @Operation(summary = "Обновление названия статьи")
   @ApiResponse(responseCode = "200", description = "Название статьи обновлено")
   ResponseEntity<String> updateArticleTitle(
-      @Parameter(description = "ID сайта") @PathVariable Long id,
+      @Parameter(description = "ID сайта") @PathVariable Long articleId,
       @RequestBody ArticleTitleData articleData
   );
 }

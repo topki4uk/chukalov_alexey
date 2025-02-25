@@ -48,6 +48,6 @@ public class InMemoryTopicsRepository implements TopicsRepository {
 
     @Override
     public void delete(UserId userId, TopicId topicId) {
-        return;
+
     }
 }

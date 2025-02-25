@@ -10,6 +10,8 @@ import com.example.demo.model.user.User;
 import com.example.demo.model.website.Website;
 import com.example.demo.model.website.WebsiteList;
 import java.util.List;
+import java.util.Objects;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class GetMethodsEnd2EndTest {
     );
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(
-        response.getBody().articleDataList().getFirst().title(),
+        Objects.requireNonNull(response.getBody()).articleDataList().getFirst().title(),
         Article.ARTICLE_1.getTitle()
     );
   }
@@ -49,7 +51,7 @@ public class GetMethodsEnd2EndTest {
     ResponseEntity<Topic> response =
         restTemplate.getForEntity("http://localhost:" + port + "/api/topics" + "/1", Topic.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), Topic.TOPIC_1);
+    assertEquals(Topic.TOPIC_1, response.getBody());
   }
 
   @Test
@@ -65,7 +67,7 @@ public class GetMethodsEnd2EndTest {
     ResponseEntity<Website> response =
         restTemplate.getForEntity("http://localhost:" + port + "/api/websites" + "/1", Website.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), Website.WEBSITE_1);
+    assertEquals(Website.WEBSITE_1, response.getBody());
   }
 
   @Test
@@ -81,6 +83,6 @@ public class GetMethodsEnd2EndTest {
     ResponseEntity<User> response =
         restTemplate.getForEntity("http://localhost:" + port + "/api/users" + "/1", User.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), User.USER_1);
+    assertEquals(User.USER_1, response.getBody());
   }
 }

@@ -5,7 +5,9 @@ import com.example.demo.model.topic.TopicId;
 import com.example.demo.exception.TopicAlreadyExistsException;
 import com.example.demo.exception.TopicNotFoundException;
 import com.example.demo.model.user.UserId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,14 @@ import java.util.Optional;
 public class InMemoryTopicsRepository implements TopicsRepository {
     List<Topic> topics = new ArrayList<>(List.of(Topic.TOPIC_1, Topic.TOPIC_2));
 
-    @Override
+    @Autowired
+    private final RestTemplate restTemplate;
+
+  public InMemoryTopicsRepository(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
+
+  @Override
     public Optional<Topic> findById(TopicId topicId) {
         for (Topic topic : topics) {
             if (topic.getId().equals(topicId)) {

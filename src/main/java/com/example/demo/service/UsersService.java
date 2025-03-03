@@ -5,6 +5,7 @@ import com.example.demo.model.user.UserId;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UsersRepository;
 import lombok.AllArgsConstructor;
+import org.apache.catalina.util.RateLimiter;
 import org.springframework.stereotype.Service;
 
 @Service

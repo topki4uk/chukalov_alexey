@@ -6,6 +6,7 @@ import com.example.demo.model.user.UserId;
 import com.example.demo.operation.UserOperations;
 import com.example.demo.service.UsersService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.catalina.util.RateLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/users")
 @Tag(name = "User API", description = "Управление пользователями")
 public final class UsersController implements UserOperations {
+
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
     private final UsersService userService;
 

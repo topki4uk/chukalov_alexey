@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("api/topics")
@@ -31,7 +32,8 @@ public final class TopicsController implements TopicOperations {
 
     @Override
     public ResponseEntity<Topic> get(Long id) {
-        Topic topic = topicService.findById(new TopicId(id));
+        CompletableFuture<Topic> completableFuture = topicService.findById(new TopicId(id));
+        Topic topic = completableFuture.join();
 
         LOG.debug("Topic with id={} was found successfully", id);
         return ResponseEntity.ok(topic);

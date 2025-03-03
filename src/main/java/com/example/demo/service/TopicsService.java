@@ -7,20 +7,29 @@ import com.example.demo.repository.TopicsRepository;
 import com.example.demo.model.user.UserId;
 import com.example.demo.repository.UsersRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @AllArgsConstructor
-public final class TopicsService {
+public class TopicsService {
     private final TopicsRepository topicRepository;
     private final UsersRepository userRepository;
 
-    public Topic findById(TopicId topicId) {
-        return topicRepository
+    private final Set<Topic> processTopics = ConcurrentHashMap.newKeySet();
+
+    @Async
+    public CompletableFuture<Topic> findById(TopicId topicId) {
+        Topic topic = topicRepository
             .findById(topicId)
             .orElseThrow(() -> new TopicNotFoundException(topicId));
+
+        return CompletableFuture.completedFuture(topic);
     }
 
     public List<Topic> getUserTopics(Long userId) {
@@ -28,8 +37,16 @@ public final class TopicsService {
         return topicRepository.getUserTopics(userId);
     }
 
+    /**
+     *
+     * @param topic - topic view
+     * @return created topic
+     */
     public Topic create(Topic topic) {
-        return topicRepository.create(topic);
+        if (!processTopics.add(topic)) {
+            return topicRepository.create(topic);
+        }
+        return topic;
     }
 
     public void delete(UserId userId, TopicId topicId) {

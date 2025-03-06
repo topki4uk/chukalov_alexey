@@ -42,6 +42,7 @@ public final class ArticlesController implements ArticleOperations {
         for (Article article : articles) {
             String topicDescription = topicService
                 .findById(article.getTopicId())
+                .join()
                 .getDescription();
 
             articleDataList.add(new ArticleData(article.getTitle(), article.getUrl(), article.getCreatedAt(), topicDescription));

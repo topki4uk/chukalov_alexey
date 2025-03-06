@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.concurrent.CompletableFuture;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +36,7 @@ public class TopicsControllerMvcTest {
           new UserId(1L)
     );
 
-    Mockito.when(topicService.findById(new TopicId(1L))).thenReturn(mockTopic);
+    Mockito.when(topicService.findById(new TopicId(1L))).thenReturn(CompletableFuture.completedFuture(mockTopic));
 
     mockMvc.perform(
         MockMvcRequestBuilders.get("/api/topics/1"))

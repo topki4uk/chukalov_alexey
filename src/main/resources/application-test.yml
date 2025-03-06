@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    name: test
+    oracleucp:
+      port-number: 5432
+  application:
+    name: test

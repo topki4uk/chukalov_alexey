@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.WebsiteGetByIdRuntimeException;
 import com.example.demo.model.user.UserId;
 import com.example.demo.model.website.Website;
 import com.example.demo.model.website.WebsiteId;
 import com.example.demo.exception.WebsiteNotFoundException;
 import com.example.demo.repository.WebsitesRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +24,17 @@ public final class WebsitesService {
             .orElseThrow(() -> new WebsiteNotFoundException(websiteId));
     }
 
+    @Retryable(
+        retryFor = WebsiteGetByIdRuntimeException.class,
+        maxAttempts = 5,
+        backoff = @Backoff(delay = 10_000)
+    )
     public Website create(Website website) {
-        return websiteRepository.create(website);
+        try {
+            return websiteRepository.create(website);
+        } catch (Exception e) {
+            throw new WebsiteGetByIdRuntimeException("Website could not be created");
+        }
     }
 
     public void update(Website website) {

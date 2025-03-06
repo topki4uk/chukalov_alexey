@@ -11,7 +11,6 @@ import com.example.demo.service.WebsitesService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/websites")
 @Tag(name = "Website API", description = "Управление сайтами")
-public final class WebsitesController implements WebsiteOperations {
+public class WebsitesController implements WebsiteOperations {
     private static final Logger LOG = LoggerFactory.getLogger(WebsitesController.class);
-
-    @Autowired
     private final WebsitesService websiteService;
 
     public WebsitesController(WebsitesService websiteService) {

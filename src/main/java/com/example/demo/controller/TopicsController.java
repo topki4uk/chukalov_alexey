@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("api/topics")
 @Tag(name = "Topic API", description = "Управление топиками")
-public final class TopicsController implements TopicOperations {
+public class TopicsController implements TopicOperations {
     private static final Logger LOG = LoggerFactory.getLogger(TopicsController.class);
 
     @Autowired

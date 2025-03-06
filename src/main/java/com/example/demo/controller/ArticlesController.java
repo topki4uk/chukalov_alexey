@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/articles")
 @Tag(name = "Article API", description = "Управление статьями")
-public final class ArticlesController implements ArticleOperations {
+public class ArticlesController implements ArticleOperations {
     private static final Logger LOG = LoggerFactory.getLogger(ArticlesController.class);
 
     private final ArticlesService articleService;

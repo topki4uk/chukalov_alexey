@@ -1,23 +1,31 @@
-name: Java CI with Maven
+name: Java CI with Lombok
 
 on:
   push:
-    branches: [ "sem2/*", "main" ]
+    branches:
+      - main
+      - 'sem2/*'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - 'sem2/*'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 23
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
+          java-version: '23'
+          distribution: 'temurin'  # Вы можете использовать 'adopt' или 'zulu'
+
       - name: Build with Maven
         run: mvn clean install
+
+      - name: Run tests
+        run: mvn test

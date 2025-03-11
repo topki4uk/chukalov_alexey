@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public final class InMemoryUsersRepository implements UsersRepository {
+public class InMemoryUsersRepository implements UsersRepository {
     List<User> users = new ArrayList<>(List.of(User.USER_1, User.USER_2));
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public final class InMemoryArticlesRepository implements ArticlesRepository {
+public class InMemoryArticlesRepository implements ArticlesRepository {
     List<Article> articles = new ArrayList<>(List.of(Article.ARTICLE_1, Article.ARTICLE_2));
     private final RestTemplate restTemplate = new RestTemplate();
     private final WebClient webClient = WebClient.create();

@@ -45,7 +45,7 @@ public class TopicsService {
         return breaker.executeSupplier(
             () -> rateLimiter.executeSupplier(
                 () -> {
-                    userRepository.findById(new UserId(userId));
+                    userRepository.findById(userId);
                     return topicRepository.getUserTopics(userId);
                 }
             )

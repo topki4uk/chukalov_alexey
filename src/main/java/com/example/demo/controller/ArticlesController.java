@@ -6,13 +6,16 @@ import com.example.demo.model.article.ArticleListData;
 import com.example.demo.model.article.Article;
 import com.example.demo.model.article.ArticleData;
 import com.example.demo.model.article.ArticleTitleData;
+import com.example.demo.model.topic.TopicId;
 import com.example.demo.model.user.UserId;
 import com.example.demo.operation.ArticleOperations;
 import com.example.demo.service.ArticlesService;
 import com.example.demo.service.TopicsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.java.Log;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,33 +38,48 @@ public class ArticlesController implements ArticleOperations {
     }
 
     @Override
-    public ResponseEntity<ArticleListData> getUserArticles(Long userId) {
-        List<Article> articles = articleService.getAllUnknown(new UserId(userId));
-        List<ArticleData> articleDataList = new ArrayList<>();
+    public ResponseEntity<ArticleListData> getAllArticles() {
+        ArticleListData articles = articleService.findAll();
 
-        for (Article article : articles) {
-            String topicDescription = topicService
-                .findById(article.getTopicId())
-                .join()
-                .getDescription();
-
-            articleDataList.add(new ArticleData(article.getTitle(), article.getUrl(), article.getCreatedAt(), topicDescription));
-        }
-
-        LOG.debug("Articles of user with id={} was found successfully", userId);
-        return ResponseEntity.ok(new ArticleListData(articleDataList));
+        LOG.debug("Articles count: {}", articles.articleDataList().size());
+        return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<String> updateArticleTitle(Long articleId, ArticleTitleData titleData) {
-        Article article = articleService.findById(new ArticleId(articleId));
+    public ResponseEntity<ArticleData> getArticleById(Long articleId) {
+        Article article = articleService.findById(articleId);
+        ArticleData articleData = new ArticleData(
+            article.getTitle(),
+            article.getUrl(),
+            article.getTopicId(),
+            article.getWebsiteId()
+        );
 
-        Article newArticle = article.toBuilder()
-            .title(titleData.title())
-            .build();
-        articleService.updateTitle(newArticle);
+        LOG.debug("Article data: {}", articleData);
+        return new ResponseEntity<>(articleData, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> updateArticleTitle(Long articleId, ArticleTitleData newTitle) {
+        articleService.updateTitle(articleId, newTitle.title());
 
         LOG.debug("Article`s title with id={} was updated", articleId);
         return ResponseEntity.ok("Title updated");
+    }
+
+    @Override
+    public ResponseEntity<Article> createArticle(ArticleData articleData) {
+        Article article = articleService.create(articleData);
+
+        LOG.debug("Article`s title with id={} was created", article.getId());
+        return new ResponseEntity<>(article, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteArticle(Long articleId) {
+        articleService.delete(articleId);
+
+        LOG.debug("Article`s id with id={} was deleted", articleId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

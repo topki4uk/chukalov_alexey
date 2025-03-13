@@ -1,71 +1,51 @@
 package com.example.demo.model.article;
 
-import com.example.demo.model.topic.TopicId;
-import com.example.demo.model.website.WebsiteId;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Data;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Objects;
 
+@Entity
+@Getter
+@Setter
+@Table(name = "articles")
 @Schema(name = "Article", description = "Сущность статьи")
-@Data
-@Builder(toBuilder = true)
 public class Article {
+
+    @Id
     @Schema(description = "ID", example = "1")
-    private ArticleId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Schema(description = "title", example = "test-title")
-    @NonNull
-    private final String title;
+    @NotNull(message = "Title have to build field")
+    private String title;
 
     @Schema(description = "url", example = "https://test.ru")
-    @NonNull
-    private final String url;
+    @NotNull(message = "Url have to build field")
+    private String url;
 
     @Schema(description = "created_at")
-    @NonNull
-    private final Timestamp createdAt;
+    @NotNull(message = "Created at have to build field")
+    private Timestamp createdAt;
 
     @Schema(description = "topic_id", example = "1")
-    @NonNull
-    private final TopicId topicId;
+    @NotNull(message = "Topic ID have to build field")
+    private Long topicId;
 
     @Schema(description = "website_id", example = "1")
-    @NonNull
-    private final WebsiteId websiteId;
+    @NotNull(message = "Website ID have to build field")
+    private Long websiteId;
 
-    public static final Article ARTICLE_1 = new Article(
-            new ArticleId(1L),
-            "title_1",
-            "http://url1.ru",
-            new Timestamp(new Date().getTime()),
-            new TopicId(1L),
-            new WebsiteId(1L)
-    );
-    public static final Article ARTICLE_2 = new Article(
-            new ArticleId(1L),
-            "title_2",
-            "http://url2.ru",
-            new Timestamp(new Date().getTime()),
-            new TopicId(2L),
-            new WebsiteId(2L)
-    );
+    public Article() {}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Article article = (Article) o;
-        return id != null && id.equals(article.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public Article(String title, String url, Timestamp createdAt, Long topicId, Long websiteId) {
+        this.title = title;
+        this.url = url;
+        this.createdAt = createdAt;
+        this.topicId = topicId;
+        this.websiteId = websiteId;
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("api/users")
 @Tag(name = "User API", description = "Управление пользователями")
@@ -26,6 +28,11 @@ public class UsersController implements UserOperations {
     }
 
     @Override
+    public ResponseEntity<List<User>> findAll() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<User> get(Long id) {
         User user = userService.findById(new UserId(id));
         LOG.debug("User with id={} found successfully", id);
@@ -34,24 +41,24 @@ public class UsersController implements UserOperations {
 
     @Override
     public ResponseEntity<User> register(UserData userData) {
-        User user = userService.register(new User(
-                new UserId(null), userData.email(), userData.password(), userData.username()
-        ));
-        LOG.debug("User with id={} created successfully", user.getId().getId());
+        User user = userService.register(userData);
+        LOG.debug("User with id={} created successfully", user.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @Override
     public ResponseEntity<String> update(UserData userData, Long id) {
-        User newUser = new User(
-            new UserId(id),
-            userData.email(),
-            userData.password(),
-            userData.username()
-        );
-        userService.update(newUser);
+        userService.update(userData, id);
 
         LOG.debug("User with id={} updated successfully", id);
         return ResponseEntity.ok("User updated!");
+    }
+
+    @Override
+    public ResponseEntity<String> delete(Long id) {
+        userService.delete(id);
+        LOG.debug("User with id={} deleted successfully", id);
+
+        return ResponseEntity.ok("User deleted successfully");
     }
 }

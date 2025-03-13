@@ -1,38 +1,39 @@
 package com.example.demo.model.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
+@Entity
+@Getter
+@Setter
 @Schema(name = "User", description = "Сущность пользователя")
-@Data
-@AllArgsConstructor
-@Builder(toBuilder = true)
+@Table(name = "users")
 public class User {
+
+    @Id
     @Schema(description = "ID", example = "1")
-    @NonNull private UserId id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Schema(description = "E-mail", example = "test@mail.ru")
-    @NonNull private final String email;
+    @NotNull(message = "E-mail have to build field")
+    private String email;
 
     @Schema(description = "password", example = "test1234")
-    @NonNull private final String password;
+    @NotNull(message = "Password have to build field")
+    private String password;
 
     @Schema(description = "username", example = "test")
-    @NonNull private final String username;
+    @NotNull(message = "Username have to build field")
+    private String username;
 
-    public static final User USER_1 = new User(
-            new UserId(1L),
-            "test1@mail.ru",
-            "test1234",
-            "test1"
-    );
-    public static final User USER_2 = new User(
-            new UserId(2L),
-            "test2@mail.ru",
-            "test5678",
-            "test2"
-    );
+    public User() {}
+
+    public User(String email, String password, String username) {
+      this.email = email;
+      this.password = password;
+      this.username = username;
+    }
 }

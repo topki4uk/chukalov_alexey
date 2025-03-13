@@ -1,7 +1,7 @@
 CREATE TABLE websites (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     url text NOT NULL,
     description text NOT NULL,
-    creator_id INTEGER,
+    creator_id BIGINT,
     FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
 );

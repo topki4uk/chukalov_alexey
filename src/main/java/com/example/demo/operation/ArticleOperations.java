@@ -1,29 +1,44 @@
 package com.example.demo.operation;
 
+import com.example.demo.model.article.Article;
+import com.example.demo.model.article.ArticleData;
 import com.example.demo.model.article.ArticleListData;
 import com.example.demo.model.article.ArticleTitleData;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/default")
 public interface ArticleOperations {
-  @GetMapping("/user/{userId}")
-  @Operation(summary = "Получение статьи по id")
-  @ApiResponse(responseCode = "200", description = "Статья найдена")
-  ResponseEntity<ArticleListData> getUserArticles(@Parameter(description = "ID пользователя") @PathVariable Long userId);
 
-  @PatchMapping("/user/{articleId}")
+  @GetMapping("")
+  @Operation(summary = "Получение всех статей")
+  @ApiResponse(responseCode = "200", description = "Статьи успешно получены")
+  ResponseEntity<ArticleListData> getAllArticles();
+
+  @GetMapping("/{articleId}")
+  @Operation(summary = "Получение статьи по ID")
+  @ApiResponse(responseCode = "200", description = "Статья успешно получена")
+  ResponseEntity<ArticleData> getArticleById(@Parameter(description = "ID статьи") @PathVariable Long articleId);
+
+  @PatchMapping("/{articleId}")
   @Operation(summary = "Обновление названия статьи")
   @ApiResponse(responseCode = "200", description = "Название статьи обновлено")
   ResponseEntity<String> updateArticleTitle(
-      @Parameter(description = "ID сайта") @PathVariable Long articleId,
+      @Parameter(description = "ID статьи") @PathVariable Long articleId,
       @RequestBody ArticleTitleData articleData
   );
+
+  @PostMapping("/create")
+  @Operation(summary = "Добавление статьи")
+  @ApiResponse(responseCode = "201", description = "Статья успешно создана")
+  ResponseEntity<Article> createArticle(@RequestBody ArticleData articleData);
+
+  @DeleteMapping("/{articleId}")
+  @Operation(summary = "Удаление статьи")
+  @ApiResponse(responseCode = "200", description = "Статья успешно удалена")
+  ResponseEntity<String> deleteArticle(@Parameter(description = "ID статьи") @PathVariable Long articleId);
 }

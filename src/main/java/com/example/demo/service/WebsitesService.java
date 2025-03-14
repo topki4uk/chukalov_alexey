@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public final class WebsitesService {
+public class WebsitesService {
     private final WebsitesRepository websiteRepository;
 
     public Website findById(WebsiteId websiteId) {

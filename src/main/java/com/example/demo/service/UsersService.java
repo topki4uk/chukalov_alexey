@@ -7,21 +7,23 @@ import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UsersRepository;
 import io.github.resilience4j.ratelimiter.RateLimiter;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public final class UsersService {
+public class UsersService {
     private final UsersRepository userRepository;
     private final RateLimiter rateLimiter = RateLimiter.ofDefaults("apiRateLimiter");
 
+  @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public User findById(UserId userId) {
         return rateLimiter.executeSupplier(() ->
             userRepository
@@ -29,6 +31,7 @@ public final class UsersService {
                 .orElseThrow(() -> new UserNotFoundException(userId)));
     }
 
+    @Transactional(readOnly = false)
     public User register(UserData userData) {
         return rateLimiter.executeSupplier(() -> {
                 User user = new User();
@@ -41,12 +44,14 @@ public final class UsersService {
         );
     }
 
+  @Transactional(readOnly = false)
     public void update(UserData userData,  Long id) {
         rateLimiter.executeRunnable(() -> {
-          userRepository.update(id, userData.email(), userData.password(), userData.username());
+          userRepository.updateUser(id, userData.email(), userData.password(), userData.username());
         });
     }
 
+    @Transactional(readOnly = false)
     public void delete(Long id) {
       userRepository.deleteUserById(id);
     }

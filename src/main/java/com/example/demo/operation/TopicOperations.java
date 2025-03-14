@@ -19,20 +19,17 @@ public interface TopicOperations {
   @GetMapping("/{id}")
   @Operation(summary = "Получение топика по id")
   @ApiResponse(responseCode = "200", description = "Топик найден")
-  ResponseEntity<Topic> get(@Parameter(description = "ID топика") @PathVariable Long id);
+  ResponseEntity<TopicData> get(@Parameter(description = "ID топика") @PathVariable Long id);
 
   @PostMapping("/create")
   @Operation(summary = "Создание топика")
   @ApiResponse(responseCode = "201", description = "Топик создан")
   ResponseEntity<Topic> create(@RequestBody TopicData topicData);
 
-  @DeleteMapping("/{userId}/{topicId}")
+  @DeleteMapping("/{topicId}")
   @Operation(summary = "Удаление топика")
   @ApiResponse(responseCode = "200", description = "Топик удален")
-  ResponseEntity<String> deleteTopic(
-      @Parameter(description = "ID пользователя") @PathVariable Long userId,
-      @Parameter(description = "ID топика") @PathVariable Long topicId
-  );
+  ResponseEntity<String> deleteTopic(@Parameter(description = "ID топика") @PathVariable Long topicId);
 
   @GetMapping("/user/{userId}")
   @Operation(summary = "Получение топиков по ID пользователя")

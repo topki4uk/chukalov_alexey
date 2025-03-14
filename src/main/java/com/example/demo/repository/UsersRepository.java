@@ -3,7 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.model.user.User;
 import com.example.demo.exception.EmailConflictException;
 import com.example.demo.exception.UserNotFoundException;
-import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,7 +19,6 @@ public interface UsersRepository extends JpaRepository<User, Long> {
     @NotNull
     List<User> findAll();
 
-    @Transactional
     @Query("from User u where (u.id = :userId)")
     @NotNull
     Optional<User> findById(@NotNull Long userId);
@@ -30,14 +28,12 @@ public interface UsersRepository extends JpaRepository<User, Long> {
      * @throws EmailConflictException if an email conflict occurs
      */
     @Modifying
-    @Transactional
     @Query("update User u set u.email = :email, u.password = :password, u.username = :username where u.id = :userId")
-    void update(Long userId, String email, String password, String username);
+    void updateUser(Long userId, String email, String password, String username);
 
     /**
      * @throws UserNotFoundException if the user does not exist
      */
-    @Transactional
     @Modifying
     @Query("delete from User u where u.id = :userId")
     void deleteUserById(Long userId);

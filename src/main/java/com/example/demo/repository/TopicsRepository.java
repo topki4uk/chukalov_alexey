@@ -1,18 +1,22 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.topic.Topic;
-import com.example.demo.model.topic.TopicId;
-import com.example.demo.model.user.UserId;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface TopicsRepository {
-    Optional<Topic> findById(TopicId topicId);
+@Repository
+public interface TopicsRepository extends JpaRepository<Topic, Long> {
 
-    Topic create(Topic topic);
+    @Query("from Topic t where (t.id = :topicId)")
+    @NotNull
+    Optional<Topic> findById(@NotNull Long topicId);
 
-    List<Topic> getUserTopics(Long userId);
-
-    void delete(UserId userId, TopicId topicId);
+    @Modifying
+    @Query("delete from Topic t where t.id = :topicId")
+    void deleteTopicById(Long topicId);
 }

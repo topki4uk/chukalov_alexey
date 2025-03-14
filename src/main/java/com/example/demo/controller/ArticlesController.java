@@ -1,27 +1,20 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.model.article.ArticleId;
 import com.example.demo.model.article.ArticleListData;
 import com.example.demo.model.article.Article;
 import com.example.demo.model.article.ArticleData;
 import com.example.demo.model.article.ArticleTitleData;
-import com.example.demo.model.topic.TopicId;
-import com.example.demo.model.user.UserId;
 import com.example.demo.operation.ArticleOperations;
 import com.example.demo.service.ArticlesService;
 import com.example.demo.service.TopicsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.java.Log;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/articles")
@@ -30,11 +23,9 @@ public class ArticlesController implements ArticleOperations {
     private static final Logger LOG = LoggerFactory.getLogger(ArticlesController.class);
 
     private final ArticlesService articleService;
-    private final TopicsService topicService;
 
     public ArticlesController(ArticlesService articleService, TopicsService topicService) {
         this.articleService = articleService;
-        this.topicService = topicService;
     }
 
     @Override

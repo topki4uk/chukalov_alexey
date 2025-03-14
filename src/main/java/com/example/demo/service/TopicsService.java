@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.topic.Topic;
+import com.example.demo.model.topic.TopicData;
 import com.example.demo.model.topic.TopicId;
 import com.example.demo.exception.TopicNotFoundException;
 import com.example.demo.repository.TopicsRepository;
@@ -9,12 +11,10 @@ import com.example.demo.repository.UsersRepository;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.RateLimiter;
 import lombok.AllArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -27,54 +27,38 @@ public class TopicsService {
 
     private final Set<Topic> processTopics = ConcurrentHashMap.newKeySet();
 
-    @Async
-    public CompletableFuture<Topic> findById(TopicId topicId) {
+    @Transactional(readOnly = true)
+    public Topic findById(Long topicId) {
         return breaker.executeSupplier(
             () -> rateLimiter.executeSupplier(
-                () -> {
-                    Topic topic = topicRepository
-                        .findById(topicId)
-                        .orElseThrow(() -> new TopicNotFoundException(topicId));
-
-                    return CompletableFuture.completedFuture(topic);
-                })
+                () -> topicRepository
+                    .findById(topicId)
+                    .orElseThrow(() -> new TopicNotFoundException(new TopicId(topicId))))
             );
-    }
-
-    public List<Topic> getUserTopics(Long userId) {
-        return breaker.executeSupplier(
-            () -> rateLimiter.executeSupplier(
-                () -> {
-                    userRepository.findById(userId);
-                    return topicRepository.getUserTopics(userId);
-                }
-            )
-        );
     }
 
     /**
      *
-     * @param topic - topic view
+     * @param topicData - topic view
      * @return created topic
      */
-    public Topic create(Topic topic) {
-        return breaker.executeSupplier(
-            () -> rateLimiter.executeSupplier(
-                () -> {
-                    if (!processTopics.add(topic)) {
-                        return topicRepository.create(topic);
-                    }
-                    return topic;
-                }
-            )
-        );
+    @Transactional()
+    public Topic create(TopicData topicData) {
+      Topic topic = new Topic();
+      topic.setDescription(topicData.description());
+      topic.setUser(
+          userRepository
+              .findById(topicData.userId())
+              .orElseThrow(() -> new UserNotFoundException(new UserId(topicData.userId()))
+              )
+      );
+      topicRepository.save(topic);
+
+      return topic;
     }
 
-    public void delete(UserId userId, TopicId topicId) {
-        breaker.executeRunnable(
-            () -> rateLimiter.executeRunnable(
-                () -> topicRepository.delete(userId, topicId)
-            )
-        );
+    @Transactional()
+    public void delete(Long topicId) {
+      topicRepository.deleteById(topicId);
     }
 }

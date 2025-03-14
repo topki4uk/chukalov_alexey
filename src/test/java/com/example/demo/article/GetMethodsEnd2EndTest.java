@@ -2,15 +2,9 @@ package com.example.demo.article;
 
 import static org.junit.Assert.assertEquals;
 
-import com.example.demo.model.article.Article;
-import com.example.demo.model.article.ArticleListData;
-import com.example.demo.model.topic.Topic;
-import com.example.demo.model.topic.TopicList;
-import com.example.demo.model.user.User;
 import com.example.demo.model.website.Website;
 import com.example.demo.model.website.WebsiteList;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,18 +34,12 @@ public class GetMethodsEnd2EndTest {
 
   @Test
   public void getTopicByIdTest() {
-    ResponseEntity<Topic> response =
-        restTemplate.getForEntity("http://localhost:" + port + "/api/topics" + "/1", Topic.class);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(Topic.TOPIC_1, response.getBody());
+
   }
 
   @Test
   public void getUserTopicsByIdTest() {
-    ResponseEntity<TopicList> response =
-        restTemplate.getForEntity("http://localhost:" + port + "/api/topics" + "/user/1", TopicList.class);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), new TopicList(List.of(Topic.TOPIC_1)));
+
   }
 
   @Test

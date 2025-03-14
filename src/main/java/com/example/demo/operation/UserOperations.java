@@ -2,7 +2,6 @@ package com.example.demo.operation;
 
 import com.example.demo.model.user.User;
 import com.example.demo.model.user.UserData;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

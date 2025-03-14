@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,6 +36,10 @@ public class TopicsService {
                     .findById(topicId)
                     .orElseThrow(() -> new TopicNotFoundException(new TopicId(topicId))))
             );
+    }
+
+    public List<Topic> getUserTopics(Long userId) {
+        return null;
     }
 
     /**

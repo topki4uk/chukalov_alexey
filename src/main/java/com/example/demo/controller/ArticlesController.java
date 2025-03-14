@@ -7,7 +7,6 @@ import com.example.demo.model.article.ArticleData;
 import com.example.demo.model.article.ArticleTitleData;
 import com.example.demo.operation.ArticleOperations;
 import com.example.demo.service.ArticlesService;
-import com.example.demo.service.TopicsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -24,7 +23,7 @@ public class ArticlesController implements ArticleOperations {
 
     private final ArticlesService articleService;
 
-    public ArticlesController(ArticlesService articleService, TopicsService topicService) {
+    public ArticlesController(ArticlesService articleService) {
         this.articleService = articleService;
     }
 

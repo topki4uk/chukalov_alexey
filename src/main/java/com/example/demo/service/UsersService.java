@@ -31,7 +31,7 @@ public class UsersService {
                 .orElseThrow(() -> new UserNotFoundException(userId)));
     }
 
-    @Transactional(readOnly = false)
+    @Transactional()
     public User register(UserData userData) {
         return rateLimiter.executeSupplier(() -> {
                 User user = new User();
@@ -44,14 +44,13 @@ public class UsersService {
         );
     }
 
-  @Transactional(readOnly = false)
+  @Transactional()
     public void update(UserData userData,  Long id) {
-        rateLimiter.executeRunnable(() -> {
-          userRepository.updateUser(id, userData.email(), userData.password(), userData.username());
-        });
+        rateLimiter.executeRunnable(() ->
+            userRepository.updateUser(id, userData.email(), userData.password(), userData.username()));
     }
 
-    @Transactional(readOnly = false)
+    @Transactional()
     public void delete(Long id) {
       userRepository.deleteUserById(id);
     }

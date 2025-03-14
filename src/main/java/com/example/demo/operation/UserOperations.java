@@ -1,0 +1,40 @@
+package com.example.demo.operation;
+
+import com.example.demo.model.user.User;
+import com.example.demo.model.user.UserData;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequestMapping("/default")
+public interface UserOperations {
+
+  @Operation(summary = "Получение всех пользователей")
+  @ApiResponse(responseCode = "200", description = "Пользователи найдены")
+  @GetMapping("/")
+  ResponseEntity<List<User>> findAll();
+
+  @Operation(summary = "Получение пользователя по id")
+  @ApiResponse(responseCode = "200", description = "Пользователь найден")
+  @GetMapping("/{id}")
+  ResponseEntity<User> get(@Parameter(description = "ID пользователя") @PathVariable Long id);
+
+  @Operation(summary = "Регистрация нового пользователя")
+  @ApiResponse(responseCode = "201", description = "Пользователь создан")
+  @PostMapping("/register")
+  ResponseEntity<User> register(@RequestBody UserData userData);
+
+  @Operation(summary = "Обновление данных о пользователе")
+  @ApiResponse(responseCode = "200", description = "Пользователь обновлен")
+  @PutMapping("/{id}")
+  ResponseEntity<String> update(@RequestBody UserData userData, @Parameter(description = "ID пользователя") @PathVariable Long id);
+
+  @Operation(summary = "Удаление данных о пользователе")
+  @ApiResponse(responseCode = "200", description = "Пользователь удален")
+  @DeleteMapping("/{id}")
+  ResponseEntity<String> delete(@Parameter(description = "ID пользователя") @PathVariable Long id);
+}

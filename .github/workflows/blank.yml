@@ -14,6 +14,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: mydatabase
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
+        ports:
+          - 5432:5432
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,3 +36,10 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
+
+      - name: Run tests
+        env:
+          SPRING_DATABASE_URL: jdbc:postgresql://localhost:5432/mydatabase
+          SPRING_DATABASE_USERNAME: myuser
+          SPRING_DATABASE_PASSWORD: mypassword
+        run: mvn test

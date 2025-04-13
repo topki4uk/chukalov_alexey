@@ -32,6 +32,11 @@ jobs:
           CASSANDRA_RACK: rack1
         ports:
           - 9042:9042  # CQL
+        options: >-
+          --health-cmd="cqlsh -e 'SELECT now() FROM system.local'"
+          --health-interval=30s
+          --health-timeout=10s
+          --health-retries=5
 
     steps:
       - name: Checkout code

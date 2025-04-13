@@ -3,10 +3,8 @@ package com.example.homework.connector;
 import com.datastax.oss.driver.api.core.CqlIdentifier;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.CqlSessionBuilder;
-import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder;
-import lombok.Getter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,6 +29,10 @@ public class CassandraConnector {
         .withNetworkTopologyStrategy(Map.of("datacenter1", 1))
         .build();
     session.execute(statement);
+
+    session.execute("""
+        create keyspace if not exists hw6 with replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+        """);
 
     session.execute("""
             CREATE TABLE IF NOT EXISTS hw6.user_audit (

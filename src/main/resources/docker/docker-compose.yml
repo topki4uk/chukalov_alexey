@@ -18,7 +18,7 @@ services:
     container_name: cassandra
     environment:
       CASSANDRA_CLUSTER_NAME: my_cluster
-      CASSANDRA_DC: dc1
+      CASSANDRA_DC: datacenter1
       CASSANDRA_RACK: rack1
       CASSANDRA_SEEDS: cassandra
     ports:

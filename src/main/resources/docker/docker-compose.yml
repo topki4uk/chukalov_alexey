@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest  # Используйте последнюю версию PostgreSQL
+    container_name: my_postgres  # Имя контейнера
+    environment:
+      POSTGRES_DB: mydatabase  # Имя базы данных
+      POSTGRES_USER: myuser     # Имя пользователя
+      POSTGRES_PASSWORD: mypassword  # Пароль пользователя
+    ports:
+      - "5432:5432"  # Проброс порта
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Сохранение данных
+
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    environment:
+      CASSANDRA_CLUSTER_NAME: my_cluster
+      CASSANDRA_DC: datacenter1
+      CASSANDRA_RACK: rack1
+      CASSANDRA_SEEDS: cassandra
+    ports:
+      - "9042:9042"  # CQL
+      - "7000:7000"  # Inter-node communication
+      - "7001:7001"  # SSL communication
+      - "7199:7199"  # JMX
+    volumes:
+      - cassandra_data:/var/lib/cassandra  # Persistent storage
+
+volumes:
+  cassandra_data:
+  postgres_data:

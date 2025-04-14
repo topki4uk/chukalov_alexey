@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.UUID;
+
 @Schema(name = "Website", example = "Сущность сайта")
 @Data
 @AllArgsConstructor
@@ -32,14 +34,14 @@ public class Website {
         new WebsiteId(1L),
         "http://url1.ru",
         "test_description_1",
-        new UserId(1L)
+        new UserId(UUID.randomUUID())
     );
 
     public static final Website WEBSITE_2 = new Website(
         new WebsiteId(2L),
         "http://url2.ru",
         "test_description_2",
-        new UserId(2L)
+        new UserId(UUID.randomUUID())
     );
 
 }

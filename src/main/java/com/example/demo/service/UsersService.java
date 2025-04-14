@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -45,13 +46,13 @@ public class UsersService {
     }
 
   @Transactional()
-    public void update(UserData userData,  Long id) {
+    public void update(UserData userData,  UUID id) {
         rateLimiter.executeRunnable(() ->
             userRepository.updateUser(id, userData.email(), userData.password(), userData.username()));
     }
 
     @Transactional()
-    public void delete(Long id) {
+    public void delete(UUID id) {
       userRepository.deleteUserById(id);
     }
 }

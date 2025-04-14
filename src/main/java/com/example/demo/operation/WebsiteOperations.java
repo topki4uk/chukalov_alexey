@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.UUID;
+
 @RequestMapping("/default")
 public interface WebsiteOperations {
   @GetMapping("/{id}")
@@ -27,7 +29,7 @@ public interface WebsiteOperations {
   @GetMapping("/user/{id}")
   @Operation(summary = "Получить сайты по ID пользователя")
   @ApiResponse(responseCode = "200", description = "Сайты найдены")
-  ResponseEntity<WebsiteList> getUserWebsites(@Parameter(description = "ID пользователя") @PathVariable Long id);
+  ResponseEntity<WebsiteList> getUserWebsites(@Parameter(description = "ID пользователя") @PathVariable UUID id);
 
   @PostMapping("/user")
   @Operation(summary = "Создать сайт")
@@ -53,7 +55,7 @@ public interface WebsiteOperations {
   @Operation(summary = "Удалить сайт")
   @ApiResponse(responseCode = "200", description = "Сайт удален")
   ResponseEntity<String> deleteWebsite(
-      @Parameter(description = "ID пользователя") @PathVariable Long userId,
+      @Parameter(description = "ID пользователя") @PathVariable UUID userId,
       @Parameter(description = "ID сайта") @PathVariable Long websiteId
   );
 }

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/users")
@@ -32,7 +33,7 @@ public class UsersController implements UserOperations {
     }
 
     @Override
-    public ResponseEntity<User> get(Long id) {
+    public ResponseEntity<User> get(UUID id) {
         User user = userService.findById(new UserId(id));
         LOG.debug("User with id={} found successfully", id);
         return ResponseEntity.ok(user);
@@ -46,7 +47,7 @@ public class UsersController implements UserOperations {
     }
 
     @Override
-    public ResponseEntity<String> update(UserData userData, Long id) {
+    public ResponseEntity<String> update(UserData userData, UUID id) {
         userService.update(userData, id);
 
         LOG.debug("User with id={} updated successfully", id);
@@ -54,7 +55,7 @@ public class UsersController implements UserOperations {
     }
 
     @Override
-    public ResponseEntity<String> delete(Long id) {
+    public ResponseEntity<String> delete(UUID id) {
         userService.delete(id);
         LOG.debug("User with id={} deleted successfully", id);
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UsersRepository extends JpaRepository<User, Long> {
@@ -21,7 +22,7 @@ public interface UsersRepository extends JpaRepository<User, Long> {
 
     @Query("from User u where (u.id = :userId)")
     @NotNull
-    Optional<User> findById(@NotNull Long userId);
+    Optional<User> findById(@NotNull UUID userId);
 
     /**
      * @throws UserNotFoundException if the user does not exist
@@ -29,12 +30,12 @@ public interface UsersRepository extends JpaRepository<User, Long> {
      */
     @Modifying
     @Query("update User u set u.email = :email, u.password = :password, u.username = :username where u.id = :userId")
-    void updateUser(Long userId, String email, String password, String username);
+    void updateUser(UUID userId, String email, String password, String username);
 
     /**
      * @throws UserNotFoundException if the user does not exist
      */
     @Modifying
     @Query("delete from User u where u.id = :userId")
-    void deleteUserById(Long userId);
+    void deleteUserById(UUID userId);
 }

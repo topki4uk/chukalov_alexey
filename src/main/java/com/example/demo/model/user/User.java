@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -14,8 +16,8 @@ public class User {
 
     @Id
     @Schema(description = "ID", example = "1")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Schema(description = "E-mail", example = "test@mail.ru")
     @NotNull(message = "E-mail have to build field")

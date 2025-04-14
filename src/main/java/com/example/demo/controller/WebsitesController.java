@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/websites")
@@ -35,7 +36,7 @@ public class WebsitesController implements WebsiteOperations {
     }
 
     @Override
-    public ResponseEntity<WebsiteList> getUserWebsites(Long id) {
+    public ResponseEntity<WebsiteList> getUserWebsites(UUID id) {
         List<Website> websites = websiteService.findSubscribedWebsitesByUserId(new UserId(id));
         LOG.debug("Websites for user with id={} was found successfully", id);
     return ResponseEntity.ok(new WebsiteList(websites));
@@ -79,7 +80,7 @@ public class WebsitesController implements WebsiteOperations {
     }
 
     @Override
-    public ResponseEntity<String> deleteWebsite(Long userId, Long websiteId) {
+    public ResponseEntity<String> deleteWebsite(UUID userId, Long websiteId) {
         websiteService.delete(new UserId(userId), new WebsiteId(websiteId));
         LOG.debug("Website with id={} was deleted successfully", websiteId);
         return ResponseEntity.ok("Website deleted!");

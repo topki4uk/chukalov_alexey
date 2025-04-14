@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/default")
 public interface UserOperations {
@@ -21,7 +22,7 @@ public interface UserOperations {
   @Operation(summary = "Получение пользователя по id")
   @ApiResponse(responseCode = "200", description = "Пользователь найден")
   @GetMapping("/{id}")
-  ResponseEntity<User> get(@Parameter(description = "ID пользователя") @PathVariable Long id);
+  ResponseEntity<User> get(@Parameter(description = "ID пользователя") @PathVariable UUID id);
 
   @Operation(summary = "Регистрация нового пользователя")
   @ApiResponse(responseCode = "201", description = "Пользователь создан")
@@ -31,10 +32,10 @@ public interface UserOperations {
   @Operation(summary = "Обновление данных о пользователе")
   @ApiResponse(responseCode = "200", description = "Пользователь обновлен")
   @PutMapping("/{id}")
-  ResponseEntity<String> update(@RequestBody UserData userData, @Parameter(description = "ID пользователя") @PathVariable Long id);
+  ResponseEntity<String> update(@RequestBody UserData userData, @Parameter(description = "ID пользователя") @PathVariable UUID id);
 
   @Operation(summary = "Удаление данных о пользователе")
   @ApiResponse(responseCode = "200", description = "Пользователь удален")
   @DeleteMapping("/{id}")
-  ResponseEntity<String> delete(@Parameter(description = "ID пользователя") @PathVariable Long id);
+  ResponseEntity<String> delete(@Parameter(description = "ID пользователя") @PathVariable UUID id);
 }

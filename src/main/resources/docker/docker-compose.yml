@@ -31,5 +31,4 @@ services:
 
 volumes:
   cassandra_data:
-
   postgres_data:

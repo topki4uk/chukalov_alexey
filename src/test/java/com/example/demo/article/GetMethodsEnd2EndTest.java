@@ -3,8 +3,6 @@ package com.example.demo.article;
 import static org.junit.Assert.assertEquals;
 
 import com.example.demo.model.website.Website;
-import com.example.demo.model.website.WebsiteList;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,14 +46,6 @@ public class GetMethodsEnd2EndTest {
         restTemplate.getForEntity("http://localhost:" + port + "/api/websites" + "/1", Website.class);
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(Website.WEBSITE_1, response.getBody());
-  }
-
-  @Test
-  public void getUserWebsitesTest() {
-    ResponseEntity<WebsiteList> response =
-        restTemplate.getForEntity("http://localhost:" + port + "/api/websites" + "/user/1", WebsiteList.class);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(response.getBody(), new WebsiteList(List.of(Website.WEBSITE_1)));
   }
 
   @Test

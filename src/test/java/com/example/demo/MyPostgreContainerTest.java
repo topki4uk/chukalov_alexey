@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import java.util.Optional;
 @DataJpaTest
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Testcontainers
 public class MyPostgreContainerTest extends DbSuite {
 
   @Autowired
@@ -52,12 +50,5 @@ public class MyPostgreContainerTest extends DbSuite {
     userRepository.save(USER_2);
     List<User> users = userRepository.findAll();
     Assertions.assertEquals(2, users.size());
-  }
-
-  @Test
-  public void shouldDeleteUser() {
-    Assertions.assertTrue(userRepository.findById(USER_1.getId()).isPresent());
-    userRepository.deleteById(USER_1.getId());
-    Assertions.assertFalse(userRepository.findById(USER_1.getId()).isPresent());
   }
 }

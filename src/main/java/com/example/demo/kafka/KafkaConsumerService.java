@@ -15,7 +15,10 @@ public class KafkaConsumerService {
   private ObjectMapper objectMapper;
 
   @KafkaListener(topics = {"${topic-to-consume-message}"})
-  public void receiveMessage(String message) {
+  public UserAudit receiveMessage(String message) {
+    UserAudit userAudit = objectMapper.convertValue(message, UserAudit.class);
     log.debug("Receive message from Kafka topic: {}", message);
+
+    return userAudit;
   }
 }

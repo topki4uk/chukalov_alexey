@@ -26,6 +26,4 @@ public class UserAudit {
 
   @Column(value = "event_type")
   private String eventType;
-
-
 }

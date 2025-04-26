@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(
     classes = {KafkaProducerService.class},
-    properties = {"topic-to-send-message=test-topic"}
+    properties = {"topic=article-topic"}
 )
 @Import({KafkaAutoConfiguration.class, KafkaProducerServiceTest.ObjectMapperTestConfig.class})
 @Testcontainers
@@ -62,8 +62,8 @@ class KafkaProducerServiceTest {
 
     assertDoesNotThrow(() -> kafkaProducerService.sendMessage(userAudit));
 
-    KafkaTestConsumer consumer = new KafkaTestConsumer(KAFKA.getBootstrapServers(), "some-group-id");
-    consumer.subscribe(List.of("test-topic"));
+    KafkaTestConsumer consumer = new KafkaTestConsumer(KAFKA.getBootstrapServers(), "group-1");
+    consumer.subscribe(List.of("article-topic"));
 
     ConsumerRecords<String, String> records = consumer.poll();
     assertEquals(1, records.count());

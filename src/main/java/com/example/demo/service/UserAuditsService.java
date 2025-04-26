@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.kafka.KafkaConsumerService;
 import com.example.demo.model.useraudit.UserAudit;
 import com.example.demo.repository.UserAuditsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +13,14 @@ import java.util.UUID;
 public class UserAuditsService {
 
   private final UserAuditsRepository userAuditsRepository;
-  private final KafkaConsumerService kafkaConsumerService;
 
   @Autowired
-  public UserAuditsService(UserAuditsRepository userAuditsRepository, KafkaConsumerService kafkaConsumerService) {
+  public UserAuditsService(UserAuditsRepository userAuditsRepository) {
     this.userAuditsRepository = userAuditsRepository;
-    this.kafkaConsumerService = kafkaConsumerService;
   }
 
-  public void saveUserAudits() {
-    userAuditsRepository.save(
-        kafkaConsumerService.receiveMessage(UserAuditsService.class.getSimpleName())
-    );
+  public void saveAudit(UserAudit userAudit) {
+    userAuditsRepository.save(userAudit);
   }
 
   public UserAudit saveAudit(UUID userId, String eventType, String eventDetails) {
@@ -40,5 +35,9 @@ public class UserAuditsService {
 
   public List<UserAudit> getUserAudits(UUID userId) {
     return userAuditsRepository.getByUserId(userId);
+  }
+
+  public void removeAll() {
+    userAuditsRepository.deleteAll();
   }
 }

@@ -11,11 +11,9 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Table(value = "user_audit")
-public class UserAudit {
+@Table(value = "outbox")
+public class UserAuditOutbox {
 
   @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
   private UUID userId;
@@ -29,12 +27,12 @@ public class UserAudit {
   @Column(value = "event_type")
   private String eventType;
 
-  public UserAuditOutbox toOutbox() {
-    UserAuditOutbox userAuditOutbox = new UserAuditOutbox();
-    userAuditOutbox.setUserId(userId);
-    userAuditOutbox.setEventTime(eventTime);
-    userAuditOutbox.setEventDetails(eventDetails);
-    userAuditOutbox.setEventType(eventType);
-    return userAuditOutbox;
+  public UserAudit toUserAudit() {
+    UserAudit userAudit = new UserAudit();
+    userAudit.setUserId(userId);
+    userAudit.setEventTime(eventTime);
+    userAudit.setEventDetails(eventDetails);
+    userAudit.setEventType(eventType);
+    return userAudit;
   }
 }

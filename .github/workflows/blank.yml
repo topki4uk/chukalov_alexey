@@ -48,11 +48,4 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn clean install
-
-      - name: Run tests
-        env:
-          SPRING_DATABASE_URL: jdbc:postgresql://localhost:5432/mydatabase
-          SPRING_DATABASE_USERNAME: myuser
-          SPRING_DATABASE_PASSWORD: mypassword
-        run: mvn test
+        run: mvn clean -e install

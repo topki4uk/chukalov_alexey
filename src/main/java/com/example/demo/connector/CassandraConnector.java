@@ -45,6 +45,17 @@ public class CassandraConnector {
                AND default_time_to_live = 2592000;
             """);
 
+    session.execute("""
+            CREATE TABLE IF NOT EXISTS hw6.outbox (
+                user_id UUID,
+                event_time TIMESTAMP,
+                event_type TEXT,
+                event_details TEXT,
+                PRIMARY KEY ((user_id), event_time)
+            ) WITH CLUSTERING ORDER BY (event_time DESC);
+            """);
+
+
     return sessionBuilder
         .withKeyspace("hw6")
         .build();

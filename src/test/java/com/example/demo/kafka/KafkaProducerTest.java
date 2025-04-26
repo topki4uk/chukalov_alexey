@@ -50,6 +50,7 @@ class KafkaProducerServiceTest {
 
   @Autowired
   private KafkaProducerService kafkaProducerService;
+
   @Autowired
   private ObjectMapper objectMapper;
 

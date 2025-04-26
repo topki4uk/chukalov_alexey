@@ -7,7 +7,7 @@ import com.example.demo.model.useraudit.UserAudit;
 import com.example.demo.model.useraudit.UserAuditOutbox;
 import com.example.demo.service.OutboxService;
 import com.example.demo.service.UserAuditsService;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,7 +44,7 @@ public class OutboxTest extends DbSuite {
   @Autowired
   private OutboxService outboxService;
 
-  @AfterEach
+  @BeforeEach
   public void cleanUp() {
     outboxService.removeAll();
     userAuditsService.removeAll();

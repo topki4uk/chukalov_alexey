@@ -72,7 +72,7 @@ public class OutboxTest extends DbSuite {
         new ArticleData("title", "url", 1L, 1L)
         );
 
-    Thread.sleep(6 * 1000);
+    Thread.sleep(10 * 1000);
 
     List<UserAuditOutbox> res = outboxService.removeAll();
     assertEquals(0, res.size());

@@ -1,12 +1,12 @@
 package com.example.demo.outbox;
 
+import com.example.demo.DbSuite;
 import com.example.demo.controller.ArticlesController;
 import com.example.demo.model.article.ArticleData;
 import com.example.demo.model.useraudit.UserAudit;
 import com.example.demo.model.useraudit.UserAuditOutbox;
 import com.example.demo.service.OutboxService;
 import com.example.demo.service.UserAuditsService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
-public class OutboxTest {
+public class OutboxTest extends DbSuite {
   @Container
   @ServiceConnection
   public static final KafkaContainer KAFKA =

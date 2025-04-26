@@ -14,6 +14,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: mydatabase
+          POSTGRES_USER: myuser
+          POSTGRES_PASSWORD: mypassword
+        ports:
+          - 5432:5432
+
+      cassandra:
+        image: cassandra:latest
+        env:
+          CASSANDRA_CLUSTER_NAME: my_cluster
+          CASSANDRA_DC: datacenter1
+          CASSANDRA_RACK: rack1
+        ports:
+          - 9042:9042  # CQL
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
